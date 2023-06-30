@@ -49,7 +49,6 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.input:setWidth(self.width- 2*math.min(self.width/8, self.height/8))
   self.input:setHeight(math.floor((self.height- 2*math.min(self.width/8, self.height/8))/self.font:getHeight())*self.font:getHeight())
   self.textCanvas=love.graphics.newCanvas(self.width- 2*math.min(self.width/8, self.height/8), math.floor((self.height- 2*math.min(self.width/8, self.height/8))/self.font:getHeight())*self.font:getHeight())
-  print()
   self.button=AdapterButton(self.x+math.min(self.width/8, self.height/8), self.y+math.min(self.width/8, self.height/8), self.width- 2*math.min(self.width/8, self.height/8), math.floor((self.height- 2*math.min(self.width/8, self.height/8))/self.font:getHeight())*self.font:getHeight())
   self.buttonPressFunc = (function (pt, button, presses) if self.button:contains(pt) then 
       if (love.system.getOS() == "Android" or love.system.getOS() == "iOS") then

@@ -7,7 +7,7 @@ setmetatable(wait, {
 	if type(func)~="nil" then
 		safety.ensureFunction(func, "func")
 	end
-	table.insert(waitTable, {love.timer.getTime()+seconds, func, args})
+	table.insert(active, {love.timer.getTime()+seconds, func, args})
 end})
 
 function wait.update()
