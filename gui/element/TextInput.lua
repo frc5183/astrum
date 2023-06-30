@@ -10,6 +10,7 @@ local ClickPulser = require"lib.gui.subsystem.ClickPulser"
 local math2 = require"lib.math2"
 local scrollButton
 local AdapterButton = require"lib.gui.element.AdapterButton"
+local VisualButton = require"lib.gui.element.VisualButton"
 TextInput:include(Rectangle)
 local list = {}
 function TextInput:initialize(x, y, width, height, color, text, fontsize, align, mode)
@@ -61,10 +62,10 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.downFunc = (function (pt, button, presses) if self.downButton:contains(pt) then self.input:keypressed("down", false) end end)
   local min8 = math.min(self.width/8, self.height/8)
   
-  self.upButton = TextButton(self.x+min8, self.y, self.width-(2*min8), min8, Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a), "", 12, "left")
-  self.downButton = TextButton(self.x+min8, self.y+self.height-(min8), self.width-(2*min8), min8, Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a), "", 12, "left")
-  self.leftButton = TextButton(self.x, self.y+min8, min8, self.height-(2*min8), Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a), "", 12, "left")
-  self.rightButton = TextButton(self.x+self.width-(min8), y+min8, min8, self.height-(2*min8), Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a), "", 12, "left")
+  self.upButton = VisualButton(self.x+min8, self.y, self.width-(2*min8), min8, Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a))
+  self.downButton = VisualButton(self.x+min8, self.y+self.height-(min8), self.width-(2*min8), min8, Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a))
+  self.leftButton = VisualButton(self.x, self.y+min8, min8, self.height-(2*min8), Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a))
+  self.rightButton = VisualButton(self.x+self.width-(min8), y+min8, min8, self.height-(2*min8), Color(color.r*0.5, color.g*0.5, color.b*0.5, color.a))
   
   self.enabled=false
 end
