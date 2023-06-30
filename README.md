@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Astrum is a multi-purpose love2d library made to simply the process of creating multi-platform apps (or possibly games) with love2d.
 
 
@@ -15,3 +16,7 @@ asset=loadedAsset
 category and id must be string values. 
 asset may be of any type supported by love2d channels except for nil (because that would be pointless)
 
+=======
+# astrum
+The Love2D Lua Library powering projects like beefrontend. 
+>>>>>>> a1be289e534c535131db269b1cedfa3b91e3247a
