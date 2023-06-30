@@ -7,8 +7,8 @@ AdapterButton:include(Button)
 function AdapterButton:initialize(x, y, width, height)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
-  safety.ensureNumber(width, "width")
-  safety.ensureNumber(height, "height")
+  safety.ensureNumberOver(width, 0, "width")
+  safety.ensureNumberOver(height, 0, "height")
   self:initButton(x, y, width, height)
 end
 

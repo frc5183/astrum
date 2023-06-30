@@ -5,8 +5,8 @@ local Color = require"lib.gui.color"
 function rectangle:initRectangle(x, y, width, height, color, int_color)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
-  safety.ensureIntegerOver(width, 1, "width")
-  safety.ensureIntegerOver(height, 1, "height")
+  safety.ensureNumberOver(width, 0, "width")
+  safety.ensureNumberOver(height, 0, "height")
   safety.ensureColor(color, "color")
   if int_color~=nil then
     safety.ensureColor(int_color, "int_color")

@@ -3,10 +3,10 @@ local FontCache = require"lib.gui.subsystem.FontCache"
 local safety = require"lib.safety"
 function Text:initText(x, y, width, height, text, fontsize, align)
   if (align==nil) then align="left" end
-  safety.ensureNumber(width, "width")
-  safety.ensureNumber(height, "height")
+  safety.ensureNumberOver(width, 0, "width")
+  safety.ensureNumberOver(height, 0, "height")
   safety.ensureString(text, "text")
-  safety.ensureNumber(fontsize, "fontsize")
+  safety.ensureIntegerOver(fontsize, 0, "fontsize")
   safety.ensureString(align, "align")
   self.x=x
   self.y=y

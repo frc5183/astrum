@@ -63,8 +63,16 @@ function safety.ensureInteger(val, name)
 end
 function safety.ensureIntegerOver(val, lim, name)
   safety.ensureInteger(val, name)
-  if (val<lim) then
-    error(name .. " must be an integer value greater than 0. Value of (" .. val .. ") does not match.")
+  safety.ensureNumber(lim, "lim")
+  if (val<=lim) then
+    error(name .. " must be an integer value greater than " .. lim ..". Value of (" .. val .. ") does not match.")
+  end
+end
+function safety.ensureNumberOver(val, lim, name)
+  safety.ensureNumber(val, name)
+  safety.ensureNumber(lim, "lim")
+  if (val<=lim) then
+    error(name .. " must be a number value greater than " .. lim .. ". Value of (" .. val .. ") does not match.")
   end
 end
 function safety.ensureInstanceType(val, class, name)

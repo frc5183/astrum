@@ -16,11 +16,11 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   table.insert(list, self)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
-  safety.ensureIntegerOver(width, 1, "width")
-  safety.ensureIntegerOver(height, 1, "height")
+  safety.ensureNumberOver(width, 0, "width")
+  safety.ensureNumberOver(height, 0, "height")
   safety.ensureColor(color, "color")
   safety.ensureString(text, "text")
-  safety.ensureIntegerOver(fontsize, 1, "fontsize")
+  safety.ensureIntegerOver(fontsize, 0, "fontsize")
   safety.ensureString(align, "align")
   if (align~="left" and align ~="center" and align ~= "right") then
     error("Align must be a value of either: left, right, or center")
@@ -154,7 +154,13 @@ function TextInput:update(dt)
     self.input:update(dt)
   end
 end
-
+function TextInput:getText()
+  return self.input:getText()
+end
+function TextInput:setText(text)
+  safety.ensureString(text, "text")
+  self.input:setText(text)
+end
 ClickPulser:onEvent("onPress", "TextInput", function (pt, button) 
     if button~=1 then return end
     local clear = true
