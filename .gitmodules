@@ -1,0 +1,12 @@
+[submodule "external/InputField"]
+	path = external/InputField
+	url = https://github.com/ReFreezed/InputField
+[submodule "external/middleclass"]
+	path = external/middleclass
+	url = https://github.com/kikito/middleclass
+[submodule "external/eflux"]
+	path = external/eflux
+	url = https://github.com/rxi/flux/
+[submodule "external/ejson"]
+	path = external/ejson
+	url = https://github.com/rxi/json.lua
