@@ -11,6 +11,7 @@ local math2 = require"lib.math2"
 local scrollButton
 local AdapterButton = require"lib.gui.element.AdapterButton"
 local VisualButton = require"lib.gui.element.VisualButton"
+local ActiveText
 TextInput:include(Rectangle)
 local list = {}
 function TextInput:initialize(x, y, width, height, color, text, fontsize, align, mode)
@@ -53,7 +54,9 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.buttonPressFunc = (function (pt, button, presses) if self.button:contains(pt) then 
       if (love.system.getOS() == "Android" or love.system.getOS() == "iOS") then
       love.keyboard.setTextInput(true, self.button.x, self.button.y, self.button.width, self.button.height)
+      
     end
+    ActiveText=self
       self.input:mousepressed(pt.x-self.button.x, pt.y-self.button.y, button, presses) else self.input:releaseMouse() end end)
   self.buttonReleaseFunc = (function (pt, button, presses) if self.button:contains(pt) then self.input:mousereleased(pt.x-self.button.x, pt.y-self.button.y, button, presses) else self.input:releaseMouse() end end)
   self.upFunc = (function (pt, button, presses) if self.upButton:contains(pt) then self.input:keypressed("up", false) end end)
@@ -141,17 +144,17 @@ function TextInput:wheelmoved(dx, dy)
   end
 end
 function TextInput:keypressed(key, scancode, isRepeat)
-  if (self.enabled) then
+  if (self.enabled and ActiveText==self) then
     self.input:keypressed(key, isRepeat)
   end
 end
 function TextInput:textinput(text)
-  if (self.enabled) then
+  if (self.enabled and ActiveText==self) then
     self.input:textinput(text)
   end
 end
 function TextInput:update(dt)
-  if (self.enabled) then
+  if (self.enabled and ActiveText==self) then
     self.input:update(dt)
   end
 end
@@ -172,6 +175,9 @@ ClickPulser:onEvent("onPress", "TextInput", function (pt, button)
     end
     if (clear and (love.system.getOS()=="Android" or love.system.getOS() == "iOS")) then
       love.keyboard.setTextInput(false)
+    end
+    if (clear) then
+      ActiveText=nil
     end
   end)
 return TextInput
