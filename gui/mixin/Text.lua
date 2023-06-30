@@ -18,6 +18,7 @@ function Text:initText(x, y, width, height, text, fontsize, align)
   self.text=love.graphics.newTextBatch(self.font)
   self.textCanvas=love.graphics.newCanvas(self.width- 2*math.min(self.width/8, self.height/8), math.floor((self.height - (2*math.min(self.width/8, self.height/8)))/self.font:getHeight())*self.font:getHeight())
   self.text:setf(text, self.width-2*math.min(self.width/8, self.height/8), self.align)
+  self._text=text
 end
 
 
@@ -37,6 +38,11 @@ end
 
 function Text:changeText(text)
   safety.ensureString(text)
+  self._text=text
  self.text:setf(text, self.width-math.min(self.width/8, self.height/8), self.align)
 end
+function Text:getText()
+  return self._text
+end
+function Text:setText(text) self:changeText(text) end
 return Text
