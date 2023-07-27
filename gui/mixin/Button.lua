@@ -20,7 +20,15 @@ function button:onClick(func)
   safety.ensureFunction(func)
   local c = self.count+1
   self.count=self.count+1
-  ClickPulser:onEvent("onClick", "Button(".. tostring(self.id) .. ") Callback(" .. tostring(c) .. ")", func)
+  ClickPulser:onEvent("onClick", "Button(".. tostring(self.id) .. ") Callback(" .. tostring(c) .. ")", 
+    function (pt, button, presses, ...) 
+      if (self.adapter~=nil) then
+        safety.ensureFunction(self.adapter, "self.adapter must be a function or nil")
+        pt = adapter(self, pt)
+        
+      end
+      func(pt, button, presses, ...)
+    end)
   return c
 end
 
@@ -34,7 +42,15 @@ function button:onPress(func)
   safety.ensureFunction(func)
   local c = self.count+1
   self.count=self.count+1
-  ClickPulser:onEvent("onPress", "Button(".. tostring(self.id) .. ") Callback(" .. tostring(c) .. ")", func)
+  ClickPulser:onEvent("onPress", "Button(".. tostring(self.id) .. ") Callback(" .. tostring(c) .. ")", 
+    function (pt, button, presses, ...) 
+      if (self.adapter~=nil) then
+        safety.ensureFunction(self.adapter, "self.adapter must be a function or nil")
+        pt = adapter(self, pt)
+        
+      end
+      func(pt, button, presses, ...)
+    end)
   return c
 end
 
