@@ -1,6 +1,9 @@
+-- Imports
 local log = require("lib.log")
 local safety = {}
-
+--- Ensures that a certain named value is a string
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureString(val, name)
 	if type(name)~="string"  then
 		if type(name)=="nil" then 
@@ -10,13 +13,16 @@ function safety.ensureString(val, name)
 		end
 	end
 	if (type(val)=="string") then
-		return true
 	else
 		local str = "Value (".. name .. ") expected to be of type string. Found type " .. type(val) .. "."
 		log.error(str)
 		error(str)
 	end
 end
+--- Ensures that a certain named value is a Lua Type
+-- @param val the value to be evaluated
+-- @param ltype the lua type that the value should be
+-- @param name the optional name of the value
 function safety.ensureLuaType(val, ltype, name)
 	safety.ensureString(ltype, "ltype")
 	if type(name)~="string"  then
@@ -27,47 +33,78 @@ function safety.ensureLuaType(val, ltype, name)
 		end
 	end
 	if (type(val)==ltype) then
-		return true
 	else
 		local str = "Value (".. name .. ") expected to be of type ".. ltype ..". Found type " .. type(val) .. "."
 		log.error(str)
 		error(str)
 	end
 end
+--- Ensures that a certain named value is a table
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureTable(val, name)
 	safety.ensureLuaType(val, "table", name)
 end
+--- Ensures that a certain named value is a number
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureNumber(val, name)
 	safety.ensureLuaType(val, "number", name)
 end
+--- Ensures that a certain named value is nil
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureNil(val, name)
 	safety.ensureLuaType(val, "nil", name)
 end
+--- Ensures that a certain named value is a function
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureFunction(val, name)
 	safety.ensureLuaType(val, "function", name)
 end
+--- Ensures that a certain named value is a boolean
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureBoolean(val, name)
 	safety.ensureLuaType(val, "boolean", name)
 end
+--- Ensures that a certain named value is a coroutine
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureCoroutine(val, name)
 	safety.ensureLuaType(val, "coroutine", name)
 end
+--- Ensures that a certain named value is a userdata
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureUserdata(val, name)
 	safety.ensureLuaType(val, "userdata", name)
 end
+--- Ensures that a certain named value is an integer
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureInteger(val, name)
   safety.ensureNumber(val, name)
   if (val~=math.floor(val)) then
     error(name .. " must be an integer value")
   end
 end
+--- Ensures that a certain named value is an integer over a certain number
+-- @param val the value to be evaluated
+-- @param lim the limit that an integer should be over
+-- @param name the optional name of the value
 function safety.ensureIntegerOver(val, lim, name)
   safety.ensureInteger(val, name)
   safety.ensureNumber(lim, "lim")
   if (val<=lim) then
     error(name .. " must be an integer value greater than " .. lim ..". Value of (" .. val .. ") does not match.")
   end
-end
+
+--- Ensures that a certain named value is a number over a certain number
+-- @param val the value to be evaluated
+-- @param lim the limit that a number should be over
+-- @param name the optional name of the value
 function safety.ensureNumberOver(val, lim, name)
   safety.ensureNumber(val, name)
   safety.ensureNumber(lim, "lim")
@@ -75,6 +112,9 @@ function safety.ensureNumberOver(val, lim, name)
     error(name .. " must be a number value greater than " .. lim .. ". Value of (" .. val .. ") does not match.")
   end
 end
+--- Ensures that a certain named value is an integer
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
 function safety.ensureInstanceType(val, class, name)
   
 	if type(name)~="string"  then
@@ -96,7 +136,7 @@ function safety.ensureInstanceType(val, class, name)
 	end
 	if (type(val.isInstanceOf)=="function") then
 		if (val:isInstanceOf(class)) then
-			return true
+			return
 		end
 	end
 	
@@ -111,5 +151,5 @@ function safety.ensureInstanceType(val, class, name)
 	log.error(str)
 	error(str)
 end
-
+-- Return
 return safety
