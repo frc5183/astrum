@@ -1,7 +1,10 @@
+-- Imports
 local fontCache={}
 local safety=require"lib.safety"
-fontCache[12]=love.graphics.newFont(12)
-fontCache[14]=love.graphics.newFont(14)
+--- Returns a cached font, or if unavailable, creates the font and adds it to the cache.
+-- Used to prevent overuse of font creation
+-- @param num the font size
+-- @return the font with the size specified
 function fontCache:getFont(num)
   safety.ensureNumber(num, "num")
   if (not fontCache[num]) then
@@ -9,5 +12,5 @@ function fontCache:getFont(num)
   end
   return fontCache[num]
 end
-
+-- Return
 return fontCache
