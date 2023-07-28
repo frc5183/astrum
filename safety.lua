@@ -100,7 +100,7 @@ function safety.ensureIntegerOver(val, lim, name)
   if (val<=lim) then
     error(name .. " must be an integer value greater than " .. lim ..". Value of (" .. val .. ") does not match.")
   end
-
+end
 --- Ensures that a certain named value is a number over a certain number
 -- @param val the value to be evaluated
 -- @param lim the limit that a number should be over
