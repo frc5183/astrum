@@ -1,4 +1,7 @@
 local depth = 0
+--- Returns the length of a table
+-- @param t the table
+-- @return the table length
 local function tablelength(t)
     local count=0
     for k, v in pairs(t) do
@@ -6,12 +9,18 @@ local function tablelength(t)
     end
     return count
 end
-local function dump2(o, i)
+--- Recursively iterates over any data structure and represents it in as much detail as possible
+-- @param o the object to dump
+-- @param i the need for a comma, used for recursion 
+-- @param tostr whether or not to disable tostr respect
+-- @return a string representing the dumped object
+local function dump2(o, i, disable_tostr)
+  local tostr = disable_tostr
     depth=depth+1
     if depth==1 then i=true end
     if type(o) == 'table' then
         ---[[
-        if o.__tostring then
+        if o.__tostring and not tostr then
             depth=depth-1
             local l=tostring(o)
             if type(o)=='string' then l='"'..l..'"' end
@@ -33,7 +42,7 @@ local function dump2(o, i)
                 count=count+1
                 if count==tablelength(o) then u=true end
                 if type(k) ~= 'number' then k = '"'..k..'"' end
-                s = s .. string.rep('	', depth) .. '['..k..'] = ' .. dump2(v, u) .. '\n'
+                s = s .. string.rep('	', depth) .. '['..k..'] = ' .. dump2(v, u, tostr) .. '\n'
             end
         end
         depth=depth-1
