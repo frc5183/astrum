@@ -112,8 +112,9 @@ function safety.ensureNumberOver(val, lim, name)
     error(name .. " must be a number value greater than " .. lim .. ". Value of (" .. val .. ") does not match.")
   end
 end
---- Ensures that a certain named value is an integer
+--- Ensures that a certain named value is an instance of a certain class
 -- @param val the value to be evaluated
+-- @param class the class that the value should be an instance of
 -- @param name the optional name of the value
 function safety.ensureInstanceType(val, class, name)
   

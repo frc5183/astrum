@@ -88,5 +88,11 @@ function Pulse:require(event, id, ...)
     self.cache[event][id]=true
   end
 end
+--- Ensures that a certain named value is a pulse
+-- @param val the value to be evaluated
+-- @param name the optional name of the value
+function safety.ensurePulse(val, name)
+  safety.ensureInstanceType(val, Pulse, name)
+end
 -- Return
 return Pulse
