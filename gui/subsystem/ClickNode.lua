@@ -10,7 +10,7 @@ local count = 0
 return function (origin, adapter)
   safety.ensureFunction(adapter, "adapter")
   local o = pulse({"onClick", "onPress"})
-  if origin!=true then
+  if origin~=true then
     safety.ensureInstanceType(origin, pulse, "origin")
     origin:onEvent("onPress", "ClickNode" .. count+1, 
     function (pt, button, presses, ...) 
@@ -21,6 +21,7 @@ return function (origin, adapter)
     function (pt, button, presses, ...)
       pt, button, presses = adapter(pt, button, presses)
       o:emit("onClick", pt, button, presses, ...)
+      end)
     count=count+1
   else
     function o:mouseReleased(x, y, button, presses)
