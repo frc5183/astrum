@@ -1,9 +1,19 @@
+-- Imports
 local class = require"lib.external.class"
 local VisualButton = require"lib.gui.element.VisualButton"
 local safety = require"lib.safety"
 local Color = require"lib.gui.color"
 local ScrollBar = class("ScrollBar")
 local dump = require"lib.dump"
+--- A scroll bar can be a vertical or horizontal bar with a dragable button
+-- @param x the x position
+-- @param y the y position
+-- @param width the scroll bar width
+-- @param height the scroll bar width
+-- @param percentage the scroll bar percentage
+-- @param color the scroll bar color
+-- @param isVerticle set to true to make it vertical, false for horizontal
+-- @return the new ScrollBar
 function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
@@ -61,19 +71,46 @@ function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical
   love.graphics.setLineWidth(oldWidth)
   love.graphics.setCanvas(oldCanvas)
 end
-
-
+--- Returns the percentage the ScrollBar has moved
+-- @return the position of the ScrollBar
+function ScrollBar:getPosition() 
+  if self.isVertical then
+    return (self.button.y-self.y)/(self.height-self.button.height)
+  else
+    return (self.button.x-self.x)/(self.width-self.button.width)
+  end
+end
+function ScrollBar:setPosition(pos)
+  safety.ensureNumber(pos)
+  if (pos<0 or pos>1) then
+    error("pos must be between 0 and 1")
+  end
+  if self.isVertical then
+    self.button.y=self.y+( (self.height-self.button.height)*pos)
+  else
+    self.button.x=self.x+( (self.width-self.button.width)*pos)
+  end
+end
+--- Draws the ScrollBar
 function ScrollBar:draw()
   if self.enabled==true then
     love.graphics.draw(self.canvas, self.x, self.y)
     self.button:draw()
   end
 end
+--- Ensures that a value is between a lower and upper bound. If it is outside bound, it returns the respective bound, otherwise returns the value
+-- @param x the value
+-- @param min the minimum value
+-- @param max the maximum value
+-- @return the clamped value
 local function clamp(x, min, max)
   if (x<min) then return min end
   if (x>max) then return max end
   return x
 end
+--- Updates the ScrollBar
+-- @param dt the change in time
+-- @param pt the mouse position
 function ScrollBar:update(dt, pt)
   if (self.startpt) then
     self.mvpt=pt
@@ -88,10 +125,13 @@ function ScrollBar:update(dt, pt)
   end
   
 end
+--- Enables the ScrollBar
 function ScrollBar:enable()
   self.enabled=true
 end
+--- Disables the ScrollBar
 function ScrollBar:disable()
   self.disabled=true
 end
+-- Return
 return ScrollBar
