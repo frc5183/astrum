@@ -1,10 +1,15 @@
+-- Import
 local Scaler = {}
 local safety = require"lib.safety"
 local flux = require"lib.external.flux"
+--- The initializng Scaler
 function Scaler:initScaler()
   self.sx=1
   self.sy=1
 end
+--- Updates the scaler
+-- @param dt the change in time
+-- @param the mouse position
 function Scaler:updateScaler(dt, pt) 
   safety.ensureNumber(dt, "dt")
   safety.ensurePoint2D(pt, "pt")
@@ -18,4 +23,5 @@ function Scaler:updateScaler(dt, pt)
     self.sy=1
   end
 end
+-- Return
 return Scaler

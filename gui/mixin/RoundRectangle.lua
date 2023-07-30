@@ -1,7 +1,15 @@
+-- Imports
 local rectangle = {}
 local safety = require"lib.safety"
 local flux = require"lib.external.flux"
 local Color = require"lib.gui.color"
+--- Rectangle is an easy to use dynamic Drawable
+-- @param x the x positon
+-- @param y the y position
+-- @param width the rectangle width
+-- @param heigh the rectangle height
+-- @param color the rectangle color
+-- @param int_color the rectangle internal color, nullable
 function rectangle:initRectangle(x, y, width, height, color, int_color)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
@@ -21,7 +29,7 @@ function rectangle:initRectangle(x, y, width, height, color, int_color)
   self.tween=nil
   self.hovered=false
 end
-
+--- Draws the rectangle
 function rectangle:drawRectangle()
 
   local oldCanvas = love.graphics.getCanvas()
@@ -47,5 +55,5 @@ function rectangle:drawRectangle()
   love.graphics.draw(self.rectangleCanvas, -(self.width/2), -(self.height/2))
   love.graphics.pop()
 end
-
+-- Return
 return rectangle
