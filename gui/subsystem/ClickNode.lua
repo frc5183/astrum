@@ -40,4 +40,5 @@ return function (origin, adapter)
       self:emit("onPress", math2.Point2D(x, y), button, presses)
     end
   end
+  return o
 end
