@@ -14,12 +14,16 @@ local dump = require"lib.dump"
 -- @param color the scroll bar color
 -- @param isVerticle set to true to make it vertical, false for horizontal
 -- @return the new ScrollBar
-function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical)
+function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical, node)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")
   safety.ensureNumberOver(height, 0, "height")
   safety.ensureColor(color, "color")
+  if (node~=nil) then
+    safety.ensurePulse(node, "node")
+  end
+  self.node=node
   self.canvas = love.graphics.newCanvas(width, height)
   self.enabled=false
   self.x=x
@@ -30,10 +34,10 @@ function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical
   self.percentage=percentage
   if (isVertical) then
     self.pos=y
-    self.button = VisualButton(x, y, width, height*percentage, color)
+    self.button = VisualButton(x, y, width, height*percentage, color, self.node)
   else
     self.pos=x
-    self.button = VisualButton(x, y, width*percentage, height, color)
+    self.button = VisualButton(x, y, width*percentage, height, color, self.node)
   end
   self.button:onPress(function (pt, button, presses) 
     if self.enabled and self.button:contains(pt) and button==1 then
