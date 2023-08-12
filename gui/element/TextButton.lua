@@ -5,7 +5,8 @@ local Rectangle=require"lib.gui.mixin.RoundRectangle"
 local Text=require"lib.gui.mixin.Text"
 local safety=require"lib.safety"
 local Scaler = require"lib.gui.mixin.Scaler"
-local TextButton=class"TextButton"
+local Base = require "lib.gui.element.Base"
+local TextButton=class("TextButton", Base)
 TextButton:include(Button)
 TextButton:include(Rectangle)
 TextButton:include(Text)

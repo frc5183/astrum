@@ -4,7 +4,8 @@ local Color = require"lib.gui.color"
 local Rectangle=require"lib.gui.mixin.RoundRectangle"
 local safety=require"lib.safety"
 local InputField = require"lib.external.InputField"
-local TextInput=class"TextInput"
+local Base = require "lib.gui.element.Base"
+local TextInput=class("TextInput", Base)
 local FontCache=require"lib.gui.subsystem.FontCache"
 local TextButton = require"lib.gui.element.TextButton"
 local ClickOrigin = require"lib.gui.subsystem.ClickOrigin"
@@ -132,6 +133,8 @@ function TextInput:draw()
     self.downButton:draw()
     self.leftButton:draw()
     self.rightButton:draw()
+    local ox, oy, owidth, oheight= love.graphics.getScissor()
+    love.graphics.setScissor()
     local oldCanvas = love.graphics.getCanvas()
     love.graphics.setCanvas(self.textCanvas)
     love.graphics.clear()
@@ -151,6 +154,7 @@ function TextInput:draw()
 	
     
     love.graphics.setCanvas(oldCanvas)
+    love.graphics.setScissor(ox, oy, owidth, oheight)
     love.graphics.draw(self.textCanvas, self.button.x, self.button.y, 0, self.sx or 1, self.sy or 1)
   end
 end
@@ -165,16 +169,17 @@ end
 --- WheelMoved callback
 -- @param dx the change in x
 -- @param dy the change in y
-function TextInput:wheelmoved(dx, dy)
+-- @param x the x position of the mouse
+-- @param y the y position of the mouse
+function TextInput:wheelmoved(dx, dy, x, y)
   local go = true
   if (love.system.getOS() == "Windows" or love.system.getOS() == "Linux" or love.system.getOS() == "OS X") then
-    local x, y = love.mouse.getPosition()
     x=x or -1
     y=y or -1
-    local go = self.button:contains(math2.Point2D(x, y)) 
+    go = self.button:contains(math2.Point2D(x, y)) 
   end
   
-  if (self.enabled) then
+  if (self.enabled and go) then
     self.input:wheelmoved(dx, dy)
   end
 end

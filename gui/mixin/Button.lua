@@ -37,11 +37,6 @@ function button:onClick(func)
   self.count=self.count+1
   self.node:onEvent("onClick", "Button(".. tostring(self.id) .. ") Callback(" .. tostring(c) .. ")", 
     function (pt, button, presses, ...) 
-      if (self.adapter~=nil) then
-        safety.ensureFunction(self.adapter, "self.adapter must be a function or nil")
-        pt = adapter(self, pt)
-        
-      end
       func(pt, button, presses, ...)
     end)
   return c
@@ -62,11 +57,6 @@ function button:onPress(func)
   self.count=self.count+1
   self.node:onEvent("onPress", "Button(".. tostring(self.id) .. ") Callback(" .. tostring(c) .. ")", 
     function (pt, button, presses, ...) 
-      if (self.adapter~=nil) then
-        safety.ensureFunction(self.adapter, "self.adapter must be a function or nil")
-        pt = adapter(self, pt)
-        
-      end
       func(pt, button, presses, ...)
     end)
   return c

@@ -3,7 +3,8 @@ local class = require"lib.external.class"
 local VisualButton = require"lib.gui.element.VisualButton"
 local safety = require"lib.safety"
 local Color = require"lib.gui.color"
-local ScrollBar = class("ScrollBar")
+local Base = require "lib.gui.element.Base"
+local ScrollBar = class("ScrollBar", Base)
 local dump = require"lib.dump"
 --- A scroll bar can be a vertical or horizontal bar with a dragable button
 -- @param x the x position

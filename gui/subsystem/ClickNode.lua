@@ -4,7 +4,12 @@ local math2 = require"lib.math2"
 local safety = require"lib.safety"
 local ClickPulser = pulse({"onClick", "onPress"})
 local count = 0
-
+local function enable (self)
+  self.enabled=true
+end
+local function disable (self)
+  self.enabled=false
+end
 --- Returns a new ClickNode
 -- If Origin is True, then it creates a top level node, otherwise it creates a child node of the ClickNode that Origin is
 return function (origin, adapter)
@@ -24,12 +29,15 @@ return function (origin, adapter)
       end)
     count=count+1
   else
+    o.go=true
     function o:mouseReleased(x, y, button, presses)
       safety.ensureNumber(x, "x")
       safety.ensureNumber(y, "y")
       safety.ensureNumber(button, "button")
       safety.ensureNumber(presses, "presses")
-      self:emit("onClick", math2.Point2D(x, y), button, presses)
+      if (self.enabled and self.go) then
+        self:emit("onClick", math2.Point2D(x, y), button, presses)
+      end
     end
 
     function o:mousePressed(x, y, button, presses)
@@ -37,8 +45,13 @@ return function (origin, adapter)
       safety.ensureNumber(y, "y")
       safety.ensureNumber(button, "button")
       safety.ensureNumber(presses, "presses")
-      self:emit("onPress", math2.Point2D(x, y), button, presses)
+      if self.enabled and self.go then
+        self:emit("onPress", math2.Point2D(x, y), button, presses)
+      end
     end
+    o.enable=enable
+    o.disable=disable
+    o:enable()
   end
   return o
 end
