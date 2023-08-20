@@ -125,7 +125,7 @@ end
 
 --- Ensures that a certain named value is an instance of a certain class
 ---@param val any
----@param class table
+---@param class any
 ---@param name string|nil
 function safety.ensureInstanceType(val, class, name)
 	if type(name) ~= "string" then
