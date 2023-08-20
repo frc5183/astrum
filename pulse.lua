@@ -105,7 +105,7 @@ end
 
 --- Ensures that a certain named value is a pulse
 ---@param val any
----@param name string
+---@param name string|nil
 function safety.ensurePulse(val, name)
   safety.ensureInstanceType(val, Pulse, name)
 end
