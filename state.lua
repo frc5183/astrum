@@ -17,17 +17,17 @@ local state_class = {}
 
 
 ---@type State
-local active = { 
+local active = {
 	---@type string
 	name = "init",
-	switchaway=nil,
-	switchto=nil
- }
+	switchaway = nil,
+	switchto = nil
+}
 --- A function that allows quick switching between different functions for the Love2D callbacks like love.draw() and love.update().
 --- A table is passed in containing all replacement callbacks. In addition to Love2D callbacks, two more are available:
 --- the callback switchaway() is used after the state.switch() is called again to allow cleaning up if needed to fully disable the state.
 --- the callback switchto() is the complement to switchaway() it is called immediately when state.switch() is called and allows setup that may be needed to enable the state again
---- @param newState State
+---@param newState State
 function state.switch(newState)
 	safety.ensureTable(newState, "newState")
 	if (not (type(newState.name) == "nil")) then
