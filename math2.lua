@@ -10,7 +10,7 @@ local Point2D = Class("Point2D")
 ---@class Vector2D
 ---@field x number
 ---@field y number
----@overload fun(x:number, y:number):Point2D
+---@overload fun(x:number, y:number, polar:boolean):Vector2D
 local Vector2D = Class("Vector2D")
 --- Compares 2 Point2Ds by comparing their individual coordinates
 ---@param point1 Point2D
