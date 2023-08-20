@@ -1,12 +1,12 @@
 -- Imports
-local class=require"lib.external.class"
-local Button=require"lib.gui.mixin.Button"
-local Rectangle=require"lib.gui.mixin.RoundRectangle"
-local Text=require"lib.gui.mixin.Text"
-local safety=require"lib.safety"
-local Scaler = require"lib.gui.mixin.Scaler"
+local class = require "lib.external.class"
+local Button = require "lib.gui.mixin.Button"
+local Rectangle = require "lib.gui.mixin.RoundRectangle"
+local Text = require "lib.gui.mixin.Text"
+local safety = require "lib.safety"
+local Scaler = require "lib.gui.mixin.Scaler"
 local Base = require "lib.gui.element.Base"
-local TextButton=class("TextButton", Base)
+local TextButton = class("TextButton", Base)
 TextButton:include(Button)
 TextButton:include(Rectangle)
 TextButton:include(Text)
@@ -36,11 +36,13 @@ function TextButton:initialize(x, y, width, height, color, text, fontsize, align
   self:initText(x, y, width, height, text, fontsize, align)
   self:initScaler()
 end
+
 --- Draws the TextButton
 function TextButton:draw()
   self:drawRectangle()
   self:drawText()
 end
+
 --- Updates the TextButton. Leave out to disable Scaling
 -- @param dt the change in time
 -- @param the mouse position
@@ -49,5 +51,6 @@ function TextButton:update(dt, pt)
   safety.ensurePoint2D(pt, "pt")
   self:updateScaler(dt, pt)
 end
+
 -- Return
 return TextButton

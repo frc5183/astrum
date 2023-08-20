@@ -1,35 +1,35 @@
 -- Imports
-local pulse = require"lib.pulse"
-local math2 = require"lib.math2"
-local safety = require"lib.safety"
-local ClickPulser = pulse({"onClick", "onPress"})
+local pulse = require "lib.pulse"
+local math2 = require "lib.math2"
+local safety = require "lib.safety"
+local ClickPulser = pulse({ "onClick", "onPress" })
 local count = 0
-local function enable (self)
-  self.enabled=true
+local function enable(self)
+  self.enabled = true
 end
-local function disable (self)
-  self.enabled=false
+local function disable(self)
+  self.enabled = false
 end
 --- Returns a new ClickNode
 -- If Origin is True, then it creates a top level node, otherwise it creates a child node of the ClickNode that Origin is
-return function (origin, adapter)
+return function(origin, adapter)
   safety.ensureFunction(adapter, "adapter")
-  local o = pulse({"onClick", "onPress"})
-  if origin~=true then
+  local o = pulse({ "onClick", "onPress" })
+  if origin ~= true then
     safety.ensureInstanceType(origin, pulse, "origin")
-    origin:onEvent("onPress", "ClickNode" .. count+1, 
-    function (pt, button, presses, ...) 
-      pt, button, presses = adapter(pt, button, presses)
-      o:emit("onPress", pt, button, presses, ...)
-    end)
-    origin:onEvent("onClick", "ClickNode" .. count+1,
-    function (pt, button, presses, ...)
-      pt, button, presses = adapter(pt, button, presses)
-      o:emit("onClick", pt, button, presses, ...)
+    origin:onEvent("onPress", "ClickNode" .. count + 1,
+      function(pt, button, presses, ...)
+        pt, button, presses = adapter(pt, button, presses)
+        o:emit("onPress", pt, button, presses, ...)
       end)
-    count=count+1
+    origin:onEvent("onClick", "ClickNode" .. count + 1,
+      function(pt, button, presses, ...)
+        pt, button, presses = adapter(pt, button, presses)
+        o:emit("onClick", pt, button, presses, ...)
+      end)
+    count = count + 1
   else
-    o.go=true
+    o.go = true
     function o:mouseReleased(x, y, button, presses)
       safety.ensureNumber(x, "x")
       safety.ensureNumber(y, "y")
@@ -49,8 +49,9 @@ return function (origin, adapter)
         self:emit("onPress", math2.Point2D(x, y), button, presses)
       end
     end
-    o.enable=enable
-    o.disable=disable
+
+    o.enable = enable
+    o.disable = disable
     o:enable()
   end
   return o

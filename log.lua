@@ -13,22 +13,26 @@ end
 function log.warn(msg)
 	Log("WARN", msg)
 end
+
 --- Prints info log messages to the console
 -- @param msg the log message to be printed to the console
 function log.info(msg)
 	Log("INFO", msg)
 end
+
 --- Prints error log messages to the console
 -- @param msg the log message to be printed to the console
 function log.error(msg)
 	Log("ERROR", msg)
 end
+
 --- Prints fatal log messages to the console
 -- @param msg the log message to be printed to the console
 function log.fatal(msg)
 	Log("FATAL", msg)
 end
+
 -- Return
-log.custom=Log
+log.custom = Log
 log.info("Console Logging Library Loaded.")
 return log
