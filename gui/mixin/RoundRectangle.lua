@@ -1,4 +1,14 @@
 -- Imports
+---@class Rectangle
+---@field x number
+---@field y number
+---@field width integer
+---@field height integer
+---@field sx number
+---@field sy number
+---@field rectangleCanvas love.Canvas
+---@field color Color
+---@field int_color Color
 local rectangle = {}
 local safety = require "lib.safety"
 local flux = require "lib.external.flux"
@@ -26,15 +36,17 @@ function rectangle:initRectangle(x, y, width, height, color, int_color)
   self.color = Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a)
   self.sx = 1
   self.sy = 1
-  self.tween = nil
-  self.hovered = false
 end
 
 --- Draws the rectangle
 function rectangle:drawRectangle()
+  ---@type love.Canvas
   local oldCanvas = love.graphics.getCanvas()
+  ---@type table
   local oldScissor = { love.graphics.getScissor() }
+  ---@type table
   local oldColor = { love.graphics.getColor() }
+  ---@type number
   local oldLineWidth = love.graphics.getLineWidth()
   love.graphics.setCanvas(self.rectangleCanvas)
   love.graphics.clear()
