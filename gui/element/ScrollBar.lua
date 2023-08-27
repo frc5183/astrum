@@ -3,28 +3,39 @@ local class = require "lib.external.class"
 local VisualButton = require "lib.gui.element.VisualButton"
 local safety = require "lib.safety"
 local Color = require "lib.gui.color"
+local math2 = require"lib.math2"
 local Base = require "lib.gui.element.Base"
+---@class ScrollBar : Base
+---@field canvas love.Canvas
+---@field x number
+---@field y number
+---@field width integer
+---@field height integer
+---@field isVertical boolean
+---@field enabled boolean
+---@field percentage number
+---@field pos number
+---@field button VisualButton
+---@field startpt Point2D|nil
+---@field mvpt Point2D|nil
+---@field dtpt Point2D|nil
+---@field opt Point2D|nil
+---@overload fun(x:number, y:number, height:integer, width:integer, percentage:number, color:Color, isVertical:boolean):ScrollBar
 local ScrollBar = class("ScrollBar", Base)
-local dump = require "lib.dump"
 --- A scroll bar can be a vertical or horizontal bar with a dragable button
--- @param x the x position
--- @param y the y position
--- @param width the scroll bar width
--- @param height the scroll bar width
--- @param percentage the scroll bar percentage
--- @param color the scroll bar color
--- @param isVerticle set to true to make it vertical, false for horizontal
--- @return the new ScrollBar
-function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical, node)
+---@param x number
+---@param y number
+---@param height integer
+---@param width integer
+---@param percentage number
+---@param color Color
+---@param isVertical boolean
+function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")
   safety.ensureNumberOver(height, 0, "height")
   safety.ensureColor(color, "color")
-  if (node ~= nil) then
-    safety.ensurePulse(node, "node")
-  end
-  self.node = node
   self.canvas = love.graphics.newCanvas(width, height)
   self.enabled = false
   self.x = x
@@ -35,29 +46,32 @@ function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical
   self.percentage = percentage
   if (isVertical) then
     self.pos = y
-    self.button = VisualButton(x, y, width, height * percentage, color, self.node)
+    self.button = VisualButton(x, y, width, height * percentage, color)
   else
     self.pos = x
-    self.button = VisualButton(x, y, width * percentage, height, color, self.node)
+    self.button = VisualButton(x, y, width * percentage, height, color)
   end
   self.button:onPress(function(pt, button, presses)
     if self.enabled and self.button:contains(pt) and button == 1 then
       self.startpt = pt
       self.mvpt = pt
       self.opt = pt
-      self.dtpt = math.Point2D(0, 0)
+      self.dtpt = math2.Point2D(0, 0)
     end
   end)
   self.button:onClick(function(pt, button, presses)
     if self.enabled and button == 1 then
       self.startpt = nil
       self.mvpt = nil
-      self.dtpt = math.Point2D(0, 0)
+      self.dtpt = math2.Point2D(0, 0)
     end
   end)
+  ---@type love.Canvas
   local oldCanvas = love.graphics.getCanvas()
   love.graphics.setCanvas(self.canvas)
+  ---@type integer
   local oldWidth = love.graphics.getLineWidth()
+  ---@type table
   local oldColor = { love.graphics.getColor() }
   love.graphics.setColor(color:unpack())
   love.graphics.setLineWidth(10)
@@ -78,7 +92,7 @@ function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical
 end
 
 --- Returns the percentage the ScrollBar has moved
--- @return the position of the ScrollBar
+---@return number
 function ScrollBar:getPosition()
   if self.isVertical then
     return (self.button.y - self.y) / (self.height - self.button.height)
@@ -86,7 +100,8 @@ function ScrollBar:getPosition()
     return (self.button.x - self.x) / (self.width - self.button.width)
   end
 end
-
+--- Sets the amount the ScrollBar has moved by percentage
+---@param pos number
 function ScrollBar:setPosition(pos)
   safety.ensureNumber(pos)
   if (pos < 0 or pos > 1) then
@@ -108,10 +123,10 @@ function ScrollBar:draw()
 end
 
 --- Ensures that a value is between a lower and upper bound. If it is outside bound, it returns the respective bound, otherwise returns the value
--- @param x the value
--- @param min the minimum value
--- @param max the maximum value
--- @return the clamped value
+---@param x number
+---@param min number
+---@param max number
+---@return number
 local function clamp(x, min, max)
   if (x < min) then return min end
   if (x > max) then return max end
@@ -124,7 +139,7 @@ function ScrollBar:update(dt, pt)
   if (self.startpt) then
     self.mvpt = pt
 
-    self.dtpt = math.Point2D(self.mvpt.x - self.opt.x, self.mvpt.y - self.opt.y)
+    self.dtpt = math2.Point2D(self.mvpt.x - self.opt.x, self.mvpt.y - self.opt.y)
     if self.isVertical then
       self.button.y = clamp(self.button.y + self.dtpt.y, self.y, self.y + self.height * (1 - self.percentage))
     else
@@ -139,6 +154,17 @@ function ScrollBar:enable()
   self.enabled = true
 end
 
+function ScrollBar:click(pt, button, presses, ...)
+ if (self.enabled) then
+  self.button:click(pt, button, presses, ...)
+ end
+end
+
+function ScrollBar:press(pt, button, presses, ...)
+  if (self.enabled) then
+   self.button:press(pt, button, presses, ...)
+  end
+ end
 --- Disables the ScrollBar
 function ScrollBar:disable()
   self.disabled = true

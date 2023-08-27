@@ -6,23 +6,23 @@ local Text = require "lib.gui.mixin.Text"
 local safety = require "lib.safety"
 local Scaler = require "lib.gui.mixin.Scaler"
 local Base = require "lib.gui.element.Base"
+---@class TextButton : Base, Text, Scaler, Button, Rectangle
+---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right"):TextButton
 local TextButton = class("TextButton", Base)
 TextButton:include(Button)
 TextButton:include(Rectangle)
 TextButton:include(Text)
 TextButton:include(Scaler)
 --- A Button implentation that also includes a Text+Rectangle to allow for a Text Visual Button
--- @param x the x coordinate
--- @param y the y coordinate
--- @param width the button width
--- @param height the button height
--- @param color the button Color
--- @param text the initial text
--- @param fontsize the button font size
--- @param align the text align mode
--- @param node the ClickNode, defaults to ClickOrigin
--- @return the new TextButton
-function TextButton:initialize(x, y, width, height, color, text, fontsize, align, node)
+---@param x number
+---@param y number
+---@param width integer
+---@param height integer
+---@param color Color
+---@param text string
+---@param fontsize number
+---@param align "left"|"center"|"right"
+function TextButton:initialize(x, y, width, height, color, text, fontsize, align)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")
@@ -31,10 +31,10 @@ function TextButton:initialize(x, y, width, height, color, text, fontsize, align
   safety.ensureString(text, "text")
   safety.ensureIntegerOver(fontsize, 0, "fontsize")
   safety.ensureString(align, "align")
-  self:initButton(x, y, width, height, node)
+  self:initButton(x, y, width, height)
   self:initRectangle(x, y, width, height, color)
   self:initText(x, y, width, height, text, fontsize, align)
-  self:initScaler()
+  self:initScaler(x, y, width, height)
 end
 
 --- Draws the TextButton
@@ -44,8 +44,8 @@ function TextButton:draw()
 end
 
 --- Updates the TextButton. Leave out to disable Scaling
--- @param dt the change in time
--- @param the mouse position
+---@param dt number
+---@param pt Point2D
 function TextButton:update(dt, pt)
   safety.ensureNumber(dt, "dt")
   safety.ensurePoint2D(pt, "pt")

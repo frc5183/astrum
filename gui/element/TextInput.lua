@@ -5,37 +5,61 @@ local Rectangle = require "lib.gui.mixin.RoundRectangle"
 local safety = require "lib.safety"
 local InputField = require "lib.external.InputField"
 local Base = require "lib.gui.element.Base"
+---@class TextInput: Base, Rectangle
+---@field x number
+---@field y number
+---@field width integer
+---@field height integer
+---@field color Color
+---@field text string
+---@field font love.Font
+---@field input table
+---@field textCanvas love.Canvas
+---@field mode "normal"|"password"|"multiwrap"|"multinowrap"
+---@field align "left"|"center"|"right"
+---@field pressid number
+---@field releaseid number
+---@field upid number
+---@field downid number
+---@field leftid number
+---@field rightid number
+---@field buttonPressFunc function
+---@field buttonReleaseFunc function
+---@field upFunc function
+---@field downFunc function
+---@field leftFunc function
+---@field rightFunc function
+---@field button AdapterButton
+---@field upButton VisualButton
+---@field downButton VisualButton
+---@field leftButton VisualButton
+---@field rightButton VisualButton
 local TextInput = class("TextInput", Base)
 local FontCache = require "lib.gui.subsystem.FontCache"
-local TextButton = require "lib.gui.element.TextButton"
-local ClickOrigin = require "lib.gui.subsystem.ClickOrigin"
 local math2 = require "lib.math2"
-local scrollButton
 local AdapterButton = require "lib.gui.element.AdapterButton"
 local VisualButton = require "lib.gui.element.VisualButton"
 local ActiveText
+---@type boolean
 local clear = false
-local count = 0
 TextInput:include(Rectangle)
 local list = {}
 --- Creates a Text Input that uses a Rectangle as a background. pre() and post() are a must to use
--- @param x the x position
--- @param y the y position
--- @param width the input width
--- @param height the input height
--- @param color the button Color
--- @param text the default text
--- @param fontesize the fontsize
--- @param align the align mode
--- @param mode the TextInput mode
--- @param node the ClickNode. If left out, ClickOrigin is used as a default
--- @return the new TextInput
-function TextInput:initialize(x, y, width, height, color, text, fontsize, align, mode, node)
+---@param x number
+---@param y number
+---@param width integer
+---@param height integer
+---@param color Color
+---@param text string
+---@param fontsize integer
+---@param align "left"|"center"|"right"
+---@param mode "normal"|"password"|"multiwrap"|"multinowrap"|nil
+function TextInput:initialize(x, y, width, height, color, text, fontsize, align, mode)
   table.insert(list, self)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
-  safety.ensureNumberOver(width, 0, "width")
-  safety.ensureNumberOver(height, 0, "height")
+  safety.ensureIntegerOver(width, 0, "width")
+  safety.ensureIntegerOver(height, 0, "height")
   safety.ensureColor(color, "color")
   safety.ensureString(text, "text")
   safety.ensureIntegerOver(fontsize, 0, "fontsize")
@@ -53,20 +77,7 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   else
     self.mode = "multiwrap"
   end
-  if (node == nil) then
-    node = ClickOrigin
-  end
-  safety.ensurePulse(node, "node")
-  self.node = node
-  count = count + 1
   self:initRectangle(x, y, width, height, color, Color(0, 0, 0, 1))
-  self.node:onEvent("onPress", "TextInput" .. tostring(count), function(pt, button)
-    if button ~= 1 then return end
-    local v = self
-    if v.enabled and v.button:contains(pt) then
-      clear = false
-    end
-  end)
   self.x = x
   self.y = y
   self.width = width
@@ -85,7 +96,7 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.button = AdapterButton(self.x + math.min(self.width / 8, self.height / 8),
     self.y + math.min(self.width / 8, self.height / 8), self.width - 2 * math.min(self.width / 8, self.height / 8),
     math.floor((self.height - 2 * math.min(self.width / 8, self.height / 8)) / self.font:getHeight()) *
-    self.font:getHeight(), self.node)
+    self.font:getHeight())
   self.buttonPressFunc = (function(pt, button, presses)
     if self.button:contains(pt) then
       if (love.system.getOS() == "Android" or love.system.getOS() == "iOS") then
@@ -107,13 +118,13 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   local min8 = math.min(self.width / 8, self.height / 8)
 
   self.upButton = VisualButton(self.x + min8, self.y, self.width - (2 * min8), min8,
-    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a), self.node)
+    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a))
   self.downButton = VisualButton(self.x + min8, self.y + self.height - (min8), self.width - (2 * min8), min8,
-    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a), self.node)
+    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a))
   self.leftButton = VisualButton(self.x, self.y + min8, min8, self.height - (2 * min8),
-    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a), self.node)
+    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a))
   self.rightButton = VisualButton(self.x + self.width - (min8), y + min8, min8, self.height - (2 * min8),
-    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a), self.node)
+    Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a))
 
   self.enabled = false
 end
@@ -179,19 +190,22 @@ function TextInput:draw()
 end
 
 --- MouseMoved callback
--- @param x the mouse x coordinate
--- @param y the mouse y coordine
-function TextInput:mousemoved(x, y)
+---@param x number
+---@param y number
+---@param dx number
+---@param dy number
+---@param istouch boolean
+function TextInput:mousemoved(x, y, dx, dy, istouch)
   if (self.enabled) then
     self.input:mousemoved(x - self.button.x, y - self.button.y)
   end
 end
 
 --- WheelMoved callback
--- @param dx the change in x
--- @param dy the change in y
--- @param x the x position of the mouse
--- @param y the y position of the mouse
+---@param dx number
+---@param dy number
+---@param x number
+---@param y number
 function TextInput:wheelmoved(dx, dy, x, y)
   local go = true
   if (love.system.getOS() == "Windows" or love.system.getOS() == "Linux" or love.system.getOS() == "OS X") then
@@ -206,17 +220,17 @@ function TextInput:wheelmoved(dx, dy, x, y)
 end
 
 --- KeyPressed callback
--- @param key the pressed key
--- @param scancode the key scancode
--- @param isRepeat whether it is a repeat press
-function TextInput:keypressed(key, scancode, isRepeat)
+---@param key string
+---@param scancode string
+---@param isrepeat boolean
+function TextInput:keypressed(key, scancode, isrepeat)
   if (self.enabled and ActiveText == self) then
-    self.input:keypressed(key, isRepeat)
+    self.input:keypressed(key, isrepeat)
   end
 end
 
 --- TextInput callback
--- @param text the input text
+---@param text string
 function TextInput:textinput(text)
   if (self.enabled and ActiveText == self) then
     self.input:textinput(text)
@@ -224,26 +238,52 @@ function TextInput:textinput(text)
 end
 
 --- Update callback
--- @param dt the change in time
-function TextInput:update(dt)
+---@param dt number
+---@param pt Point2D
+function TextInput:update(dt, pt)
   if (self.enabled and ActiveText == self) then
     self.input:update(dt)
   end
 end
 
 --- Returns the typed text
--- @return the type text
+---@return string
 function TextInput:getText()
   return self.input:getText()
 end
 
 --- Sets the text
--- @param text the text to set
+---@param text string
 function TextInput:setText(text)
   safety.ensureString(text, "text")
   self.input:setText(text)
 end
-
+---@param pt Point2D
+---@param button number
+---@param presses number
+---@param ... any
+function TextInput:press(pt, button, presses, ...)
+  if button ~= 1 then return end
+  if self.enabled and self.button:contains(pt) then
+   clear = false
+  end 
+  if (self.enabled) then
+   self.button:press(pt, button, presses, ...)
+   self.upButton:press(pt, button, presses, ...)
+   self.downButton:press(pt, button, presses, ...)
+   self.leftButton:press(pt, button, presses, ...)
+   self.rightButton:press(pt, button, presses, ...)
+  end
+end
+---@param pt Point2D
+---@param button number
+---@param presses number
+---@param ... any
+function TextInput:click(pt, button, presses, ...)
+  if self.enabled and self.button:contains(pt) then
+   self.button:click(pt, button, presses, ...)
+  end
+end
 --- To be run before ClickOrigin:onPress()
 function TextInput.pre()
   clear = true
