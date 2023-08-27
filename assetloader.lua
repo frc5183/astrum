@@ -3,34 +3,39 @@ local AssetLoader = {}
 local log = require "lib.log"
 local AssetManager = require "lib.assetmanager"
 local channel = love.thread.getChannel("assets")
+---Need because for some god forsaken reason it doesn't recognize this variant.
 ---@diagnostic disable-next-line: redundant-parameter
 love.filesystem.setIdentity(love.filesystem.getIdentity(), true)
 local int_asset_scripts = love.filesystem.getDirectoryItems("asset/script")
 local threads = {}
 local isFinished = false
 --- loads files from a directory
--- @param dir the string for the directory to be searched
--- @param script_type the script type. if Local, will only load files within the source code package or directory
+---@param dir string
+---@param script_type string
 local function load_dir(dir, script_type)
+  ---@type table
   local asset_scripts
   asset_scripts = love.filesystem.getDirectoryItems(dir)
-
+  ---@param i number
+  ---@param filename string
   for i, filename in ipairs(asset_scripts) do
+    ---@type boolean
     local go = true
+    ---@type string
     local path = dir .. "/" .. filename
     if script_type == "Local" then
       go = (not (love.filesystem.getRealDirectory(path) == love.filesystem.getSaveDirectory()))
     end
     if (go) then
-      local info
-      info = love.filesystem.getInfo(path)
+      ---@type {type:"directory"|"file"|"other"|"symlink", size:number, modtime:number}
+      local info = love.filesystem.getInfo(path)
       if (info.type == "directory") then
         load_dir(dir .. "/" .. filename, script_type)
       end
       if (info.type == "file" and string.sub(filename, -4, -1) == ".lua") then
-        local file
-        file = path
-
+        ---@type string
+        local file = path
+        ---@type love.Thread
         local thread = love.thread.newThread(file)
         thread:start()
         log.info("Starting " .. script_type .. " Asset Script: " .. path)
@@ -39,6 +44,7 @@ local function load_dir(dir, script_type)
     end
   end
 end
+---@type boolean
 local external = false
 --- Enables external scripts
 function AssetLoader.enableExternal()
@@ -55,7 +61,11 @@ end
 
 --- Manages running scripts and receives incoming assets
 function AssetLoader.update()
+  ---@type table
+  ---table for threads to remove
   local rm = {}
+  ---@param i number
+  ---@param v love.Thread
   for i, v in ipairs(threads) do
     if (not v:isRunning()) then
       table.insert(rm, i)
@@ -64,9 +74,12 @@ function AssetLoader.update()
       end
     end
   end
+  ---@param i number
+  ---@param v number
   for i, v in ipairs(rm) do
     table.remove(threads, v)
   end
+  ---@type {category:string, id:string, asset:any}
   local pop = channel:pop()
   while (pop ~= nil) do
     if (type(pop) == "table" and type(pop.category) == "string" and type(pop.id) == "string" and type(pop.asset) ~= "nil") then
@@ -83,7 +96,7 @@ function AssetLoader.update()
 end
 
 --- Returns if all scripts are finished running
--- @return isFinished
+---@return boolean
 function AssetLoader.isFinished()
   return isFinished
 end
