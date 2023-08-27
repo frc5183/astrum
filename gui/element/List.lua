@@ -1,13 +1,13 @@
 -- Imports
-local Container = require"lib.gui.element.Container"
+local Container = require "lib.gui.element.Container"
 local Base = require "lib.gui.element.Base"
-local safety = require"lib.safety"
-local Color = require"lib.gui.color"
-local TextButton = require"lib.gui.element.TextButton"
-local TextInput = require"lib.gui.element.TextInput"
-local AdapterButton = require"lib.gui.element.AdapterButton"
-local ScrollBar = require"lib.gui.element.ScrollBar"
-local VisualButton = require"lib.gui.element.VisualButton"
+local safety = require "lib.safety"
+local Color = require "lib.gui.color"
+local TextButton = require "lib.gui.element.TextButton"
+local TextInput = require "lib.gui.element.TextInput"
+local AdapterButton = require "lib.gui.element.AdapterButton"
+local ScrollBar = require "lib.gui.element.ScrollBar"
+local VisualButton = require "lib.gui.element.VisualButton"
 -- Assembler
 ---@param minimum integer the amount on the top of the List that will be left blank
 ---@param x number
@@ -16,7 +16,7 @@ local VisualButton = require"lib.gui.element.VisualButton"
 ---@param height integer
 ---@param color Color
 ---@param spacing integer
-return function (minimum, x, y, width, height, color, spacing)
+return function(minimum, x, y, width, height, color, spacing)
     safety.ensureIntegerOver(minimum, -1, "minimum")
     safety.ensureNumber(x, "x")
     safety.ensureNumber(y, "y")
@@ -25,7 +25,7 @@ return function (minimum, x, y, width, height, color, spacing)
     safety.ensureColor(color, "color")
     safety.ensureIntegerOver(spacing, -1, "spacing")
     ---@type integer
-    local twidth=1
+    local twidth = 1
     ---@type integer
     local theight = minimum
     ---@type boolean
@@ -43,11 +43,11 @@ return function (minimum, x, y, width, height, color, spacing)
         end
         safety.ensureInstanceType(obj, Base, "obj")
         table.insert(objects, obj)
-        theight=theight+obj.height+spacing
-        twidth=math.max(obj.width, twidth)
+        theight = theight + obj.height + spacing
+        twidth = math.max(obj.width, twidth)
         print(theight, twidth)
     end
-    
+
     ---@param width integer
     ---@param height integer
     ---@param color Color
@@ -59,14 +59,16 @@ return function (minimum, x, y, width, height, color, spacing)
         add(t)
         return t
     end
+
     ---@param width integer
     ---@param height integer
     ---@param color Color
-    function out.VisualButton( width, height, color)
+    function out.VisualButton(width, height, color)
         local t = VisualButton(0, theight, width, height, color)
         add(t)
         return t
     end
+
     ---@param height integer
     ---@param width integer
     ---@param percentage number
@@ -77,6 +79,7 @@ return function (minimum, x, y, width, height, color, spacing)
         add(t)
         return t
     end
+
     ---@param width integer
     ---@param height integer
     ---@param color Color
@@ -87,6 +90,7 @@ return function (minimum, x, y, width, height, color, spacing)
         add(t)
         return t
     end
+
     ---@param width integer
     ---@param height integer
     ---@param color Color
@@ -99,18 +103,21 @@ return function (minimum, x, y, width, height, color, spacing)
         add(t)
         return t
     end
+
     function out.construct()
         if (complete) then
             error("You have already constructed this list, you cannot add more")
         end
-        local container = Container(x, y, width, height, color, math.max(twidth+20, width), math.max(theight+20, height) )
+        local container = Container(x, y, width, height, color, math.max(twidth + 20, width),
+            math.max(theight + 20, height))
         ---@param k integer
         ---@param v Base
         for k, v in ipairs(objects) do
             container:add(v)
         end
-        complete=true
+        complete = true
         return container
     end
+
     return out
 end

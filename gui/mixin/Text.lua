@@ -40,7 +40,7 @@ function Text:initText(x, y, width, height, text, fontsize, align)
   self.width = width
   self.height = height
   self.font = FontCache:getFont(fontsize)
----@diagnostic disable-next-line: undefined-field
+  ---@diagnostic disable-next-line: undefined-field
   self.text = love.graphics.newTextBatch(self.font)
   self.textCanvas = love.graphics.newCanvas(self.width - 2 * math.min(self.width / 8, self.height / 8),
     math.floor((self.height - (2 * math.min(self.width / 8, self.height / 8))) / self.font:getHeight()) *

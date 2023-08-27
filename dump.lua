@@ -1,7 +1,7 @@
 local depth = 0
 --- Returns the length of a table
--- @param t the table
--- @return the table length
+---@param t table
+---@return number
 local function tablelength(t)
     local count = 0
     for k, v in pairs(t) do
@@ -10,10 +10,10 @@ local function tablelength(t)
     return count
 end
 --- Recursively iterates over any data structure and represents it in as much detail as possible
--- @param o the object to dump
--- @param i the need for a comma, used for recursion
--- @param tostr whether or not to disable tostr respect
--- @return a string representing the dumped object
+---@param o any
+---@param i boolean|nil
+---@param disable_tostr boolean|nil
+---@return string
 local function dump2(o, i, disable_tostr)
     local tostr = disable_tostr
     depth = depth + 1

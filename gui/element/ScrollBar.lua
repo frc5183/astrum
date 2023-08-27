@@ -3,7 +3,7 @@ local class = require "lib.external.class"
 local VisualButton = require "lib.gui.element.VisualButton"
 local safety = require "lib.safety"
 local Color = require "lib.gui.color"
-local math2 = require"lib.math2"
+local math2 = require "lib.math2"
 local Base = require "lib.gui.element.Base"
 ---@class ScrollBar : Base
 ---@field canvas love.Canvas
@@ -100,6 +100,7 @@ function ScrollBar:getPosition()
     return (self.button.x - self.x) / (self.width - self.button.width)
   end
 end
+
 --- Sets the amount the ScrollBar has moved by percentage
 ---@param pos number
 function ScrollBar:setPosition(pos)
@@ -155,16 +156,17 @@ function ScrollBar:enable()
 end
 
 function ScrollBar:click(pt, button, presses, ...)
- if (self.enabled) then
-  self.button:click(pt, button, presses, ...)
- end
+  if (self.enabled) then
+    self.button:click(pt, button, presses, ...)
+  end
 end
 
 function ScrollBar:press(pt, button, presses, ...)
   if (self.enabled) then
-   self.button:press(pt, button, presses, ...)
+    self.button:press(pt, button, presses, ...)
   end
- end
+end
+
 --- Disables the ScrollBar
 function ScrollBar:disable()
   self.disabled = true

@@ -75,8 +75,6 @@ function Container:initialize(x, y, width, height, color, twidth, theight)
   end
 end
 
-
-
 function Container:draw()
   local oldCanvas = love.graphics.getCanvas()
   love.graphics.setCanvas(self.canvas)
@@ -160,6 +158,7 @@ function Container:mousemoved(x, y, dx, dy, istouch)
     v:mousemoved(x, y, dx, dy, istouch)
   end
 end
+
 ---@param pt Point2D
 ---@param button number
 ---@param presses number
@@ -181,6 +180,7 @@ function Container:press(pt, button, presses, ...)
     v:press(pt, button, presses, ...)
   end
 end
+
 ---@param pt Point2D
 ---@param button number
 ---@param presses number
@@ -202,6 +202,7 @@ function Container:click(pt, button, presses, ...)
     v:click(pt, button, presses, ...)
   end
 end
+
 --- Adds a new Base to the Container
 -- @param new the new Base to add
 function Container:add(new)

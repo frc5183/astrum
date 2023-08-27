@@ -57,8 +57,9 @@ function rectangle:drawRectangle()
   love.graphics.rectangle("fill", 0, 0, self.width, self.height, math.min(self.width / 8, self.height / 8),
     math.min(self.width / 8, self.height / 8))
   love.graphics.setColor(self.color:unpack())
-  love.graphics.rectangle("line", math.min(self.width / 8, self.height / 8) / 2, math.min(self.width / 8, self.height / 8) /
-  2, self.width - math.min(self.width / 8, self.height / 8), self.height - math.min(self.width / 8, self.height / 8),
+  love.graphics.rectangle("line", math.min(self.width / 8, self.height / 8) / 2,
+    math.min(self.width / 8, self.height / 8) /
+    2, self.width - math.min(self.width / 8, self.height / 8), self.height - math.min(self.width / 8, self.height / 8),
     math.min(self.width / 8, self.height / 8) * 0.45, math.min(self.width / 8, self.height / 8) * 0.45)
 
   love.graphics.setLineWidth(oldLineWidth)

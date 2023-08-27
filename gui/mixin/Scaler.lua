@@ -22,10 +22,10 @@ function Scaler:initScaler(x, y, width, height)
   safety.ensureNumber(y, "y")
   safety.ensureNumber(width, "width")
   safety.ensureNumber(height, "height")
-  self.x=x
-  self.y=y
-  self.width=width
-  self.height=height
+  self.x = x
+  self.y = y
+  self.width = width
+  self.height = height
   self.sx = 1
   self.sy = 1
 end

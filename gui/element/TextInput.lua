@@ -71,7 +71,7 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
     safety.ensureString(mode, "mode")
     if (mode ~= "normal" and mode ~= "password" and mode ~= "multiwrap" and mode ~= "multinowrap") then
       error(
-      "Mode must be a vlue of either: normal, password, multiwrap, or multinowrap. It also may optionally be omited, in which the default value of multiwrap will apply")
+        "Mode must be a vlue of either: normal, password, multiwrap, or multinowrap. It also may optionally be omited, in which the default value of multiwrap will apply")
     end
     self.mode = mode
   else
@@ -89,7 +89,7 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.input:setFont(self.font)
   self.input:setWidth(self.width - 2 * math.min(self.width / 8, self.height / 8))
   self.input:setHeight(math.floor((self.height - 2 * math.min(self.width / 8, self.height / 8)) / self.font:getHeight()) *
-  self.font:getHeight())
+    self.font:getHeight())
   self.textCanvas = love.graphics.newCanvas(self.width - 2 * math.min(self.width / 8, self.height / 8),
     math.floor((self.height - 2 * math.min(self.width / 8, self.height / 8)) / self.font:getHeight()) *
     self.font:getHeight())
@@ -108,12 +108,22 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
       self.input:releaseMouse()
     end
   end)
-  self.buttonReleaseFunc = (function(pt, button, presses) if self.button:contains(pt) then self.input:mousereleased(
-      pt.x - self.button.x, pt.y - self.button.y, button, presses) else self.input:releaseMouse() end end)
+  self.buttonReleaseFunc = (function(pt, button, presses)
+    if self.button:contains(pt) then
+      self.input:mousereleased(
+        pt.x - self.button.x, pt.y - self.button.y, button, presses)
+    else
+      self.input:releaseMouse()
+    end
+  end)
   self.upFunc = (function(pt, button, presses) if self.upButton:contains(pt) then self.input:keypressed("up", false) end end)
   self.leftFunc = (function(pt, button, presses) if self.leftButton:contains(pt) then self.input:keypressed("left", false) end end)
-  self.rightFunc = (function(pt, button, presses) if self.rightButton:contains(pt) then self.input:keypressed("right",
-        false) end end)
+  self.rightFunc = (function(pt, button, presses)
+    if self.rightButton:contains(pt) then
+      self.input:keypressed("right",
+        false)
+    end
+  end)
   self.downFunc = (function(pt, button, presses) if self.downButton:contains(pt) then self.input:keypressed("down", false) end end)
   local min8 = math.min(self.width / 8, self.height / 8)
 
@@ -258,6 +268,7 @@ function TextInput:setText(text)
   safety.ensureString(text, "text")
   self.input:setText(text)
 end
+
 ---@param pt Point2D
 ---@param button number
 ---@param presses number
@@ -265,25 +276,27 @@ end
 function TextInput:press(pt, button, presses, ...)
   if button ~= 1 then return end
   if self.enabled and self.button:contains(pt) then
-   clear = false
-  end 
+    clear = false
+  end
   if (self.enabled) then
-   self.button:press(pt, button, presses, ...)
-   self.upButton:press(pt, button, presses, ...)
-   self.downButton:press(pt, button, presses, ...)
-   self.leftButton:press(pt, button, presses, ...)
-   self.rightButton:press(pt, button, presses, ...)
+    self.button:press(pt, button, presses, ...)
+    self.upButton:press(pt, button, presses, ...)
+    self.downButton:press(pt, button, presses, ...)
+    self.leftButton:press(pt, button, presses, ...)
+    self.rightButton:press(pt, button, presses, ...)
   end
 end
+
 ---@param pt Point2D
 ---@param button number
 ---@param presses number
 ---@param ... any
 function TextInput:click(pt, button, presses, ...)
   if self.enabled and self.button:contains(pt) then
-   self.button:click(pt, button, presses, ...)
+    self.button:click(pt, button, presses, ...)
   end
 end
+
 --- To be run before ClickOrigin:onPress()
 function TextInput.pre()
   clear = true
