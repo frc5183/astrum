@@ -23,6 +23,7 @@ return function (minimum, x, y, width, height, color, spacing)
     safety.ensureIntegerOver(width, 0, "width")
     safety.ensureIntegerOver(height, 0, "height")
     safety.ensureColor(color, "color")
+    safety.ensureIntegerOver(spacing, -1, "spacing")
     ---@type integer
     local twidth=1
     ---@type integer
