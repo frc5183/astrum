@@ -3,6 +3,10 @@ local class = require "lib.external.class"
 local math2 = require "lib.math2"
 ---@class Base
 ---@field include fun(self:Base, mixin:any)
+---@field x number
+---@field y number
+---@field width number
+---@field height number
 local Base = class("Base")
 function Base:draw() end
 ---@param dt number
