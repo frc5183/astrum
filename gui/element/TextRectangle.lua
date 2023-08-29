@@ -7,6 +7,8 @@ local Base = require "lib.gui.element.Base"
 ---@class TextRectangle : Base, Rectangle, Text
 ---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right"):TextRectangle
 local TextRectangle = class("TextRectangle", Base)
+TextRectangle:include(Button)
+TextRectangle:include(Rectangle)
 --- A Text+Rectangle to allow for a Aethstic text display
 ---@param x number
 ---@param y number
