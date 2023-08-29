@@ -75,7 +75,7 @@ function Sizer.translate(x, y)
     else
         _y = (love.graphics.getHeight() - (love.graphics.getWidth() / (factor))) / 2
     end
-    return (x - _x) / scalar, (y - _y) / scalar
+    return (x - _x) * scalar, (y - _y) * scalar
 end
 
 ---Scales delta changes from screen space changes
