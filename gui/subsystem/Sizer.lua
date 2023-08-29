@@ -23,25 +23,27 @@ local canvas
 function Sizer.init(width, height)
     safety.ensureIntegerOver(width, 0, "width")
     safety.ensureIntegerOver(height, 0, "height")
-    _width=width
-    _height=height
-    if love.graphics.getWidth()/love.graphics.getHeight() > _width/_height then
-        active=true
-        widthLonger=true
-        factor = (width/height)
-    elseif love.graphics.getWidth()/love.graphics.getHeight() < _width/_height then
-        active=true
-        widthLonger=true
-        factor =(height/width)
+    _width = width
+    _height = height
+    if love.graphics.getWidth() / love.graphics.getHeight() > _width / _height then
+        active = true
+        widthLonger = true
+        factor = (width / height)
+    elseif love.graphics.getWidth() / love.graphics.getHeight() < _width / _height then
+        active = true
+        widthLonger = true
+        factor = (height / width)
     end
     canvas = love.graphics.newCanvas(width, height)
-    scalar = math.min(love.graphics.getWidth()/_width, love.graphics.getHeight()/_height)
+    scalar = math.min(love.graphics.getWidth() / _width, love.graphics.getHeight() / _height)
 end
+
 ---Clears and sets the framebuffer
 function Sizer.begin()
     love.graphics.setCanvas(canvas)
     love.graphics.clear()
 end
+
 ---Actually draws the framebuffer to the screen
 function Sizer.finish()
     love.graphics.setCanvas()
@@ -51,13 +53,14 @@ function Sizer.finish()
     local y = 0
     if (active) then
         if (widthLonger) then
-            x = (love.graphics.getWidth() - (love.graphics.getHeight()/(factor)))/2
+            x = (love.graphics.getWidth() - (love.graphics.getHeight() / (factor))) / 2
         else
-            y = (love.graphics.getHeight() - (love.graphics.getWidth()/(factor)))/2
+            y = (love.graphics.getHeight() - (love.graphics.getWidth() / (factor))) / 2
         end
     end
     love.graphics.draw(canvas, x, y, 0, scalar, scalar)
 end
+
 ---Translates love2d coordinates to Sizer coordinates
 ---@param x number
 ---@param y number
@@ -68,11 +71,20 @@ function Sizer.translate(x, y)
     ---@type integer
     local _y = 0
     if (widthLonger) then
-        _x = (love.graphics.getWidth() - (love.graphics.getHeight()/(factor)))/2
+        _x = (love.graphics.getWidth() - (love.graphics.getHeight() / (factor))) / 2
     else
-        _y = (love.graphics.getHeight() - (love.graphics.getWidth()/(factor)))/2
+        _y = (love.graphics.getHeight() - (love.graphics.getWidth() / (factor))) / 2
     end
-    return (x-_x)/scalar, (y-_y)/scalar
+    return (x - _x) / scalar, (y - _y) / scalar
 end
+
+---Scales delta changes from screen space changes
+---@param dx number
+---@param dy number
+---@return number, number
+function Sizer.scale(dx, dy)
+    return dx / scalar, dy / scalar
+end
+
 -- Return
 return Sizer
