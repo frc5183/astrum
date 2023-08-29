@@ -55,6 +55,7 @@ return function(minimum, x, y, width, height, color, spacing)
     ---@param text string
     ---@param fontsize number
     ---@param align "left"|"center"|"right"
+    ---@return TextButton
     function out.TextButton(width, height, color, text, fontsize, align)
         local t = TextButton(0, theight, width, height, color, text, fontsize, align)
         add(t)
@@ -64,6 +65,7 @@ return function(minimum, x, y, width, height, color, spacing)
     ---@param width integer
     ---@param height integer
     ---@param color Color
+    ---@return VisualButton
     function out.VisualButton(width, height, color)
         local t = VisualButton(0, theight, width, height, color)
         add(t)
@@ -75,6 +77,7 @@ return function(minimum, x, y, width, height, color, spacing)
     ---@param percentage number
     ---@param color Color
     ---@param isVertical boolean
+    ---@return ScrollBar
     function out.ScrollBar(width, height, percentage, color, isVertical)
         local t = ScrollBar(0, theight, width, height, percentage, color, isVertical)
         add(t)
@@ -86,6 +89,7 @@ return function(minimum, x, y, width, height, color, spacing)
     ---@param color Color
     ---@param twidth integer
     ---@param theight integer
+    ---@return Container
     function out.Container(width, height, color, twidth, theight)
         local t = Container(0, theight, width, height, color, twidth, theight)
         add(t)
@@ -99,6 +103,7 @@ return function(minimum, x, y, width, height, color, spacing)
     ---@param fontsize integer
     ---@param align "left"|"center"|"right"
     ---@param mode "normal"|"password"|"multiwrap"|"multinowrap"|nil
+    ---@return TextInput
     function out.TextInput(width, height, color, text, fontsize, align, mode)
         local t = TextInput(0, theight, width, height, color, text, fontsize, align, mode)
         add(t)
@@ -111,6 +116,7 @@ return function(minimum, x, y, width, height, color, spacing)
     ---@param text string
     ---@param fontsize number
     ---@param align "left"|"center"|"right"
+    ---@return TextRectangle
     function out.TextRectangle(width, height, color, text, fontsize, align)
         local t = TextRectangle(0, theight, width, height, color, text, fontsize, align)
         add(t)
@@ -121,6 +127,7 @@ return function(minimum, x, y, width, height, color, spacing)
         if (complete) then
             error("You have already constructed this list, you cannot add more")
         end
+        ---@type Container
         local container = Container(x, y, width, height, color, math.max(twidth + 20, width),
             math.max(theight + 20, height))
         ---@param k integer
