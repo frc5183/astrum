@@ -7,5 +7,6 @@ return {
   ScrollBar = require "lib.gui.element.ScrollBar",
   List = require "lib.gui.element.List",
   Sizer = require"lib.gui.subsystem.Sizer",
-  TextRectangle=require"lib.gui.element.TextRectangle"
+  TextRectangle=require"lib.gui.element.TextRectangle",
+  Container = require"lib.gui.element.Container"
 }
