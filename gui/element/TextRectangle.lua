@@ -1,13 +1,13 @@
 -- Imports
 local class = require "lib.external.class"
-local Button = require "lib.gui.mixin.Button"
 local Rectangle = require "lib.gui.mixin.RoundRectangle"
+local Text = require"lib.gui.mixin.Text"
 local safety = require "lib.safety"
 local Base = require "lib.gui.element.Base"
 ---@class TextRectangle : Base, Rectangle, Text
 ---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right"):TextRectangle
 local TextRectangle = class("TextRectangle", Base)
-TextRectangle:include(Button)
+TextRectangle:include(Text)
 TextRectangle:include(Rectangle)
 --- A Text+Rectangle to allow for a Aethstic text display
 ---@param x number
