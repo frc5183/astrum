@@ -53,7 +53,7 @@ function Sizer.finish()
     local y = 0
     if (active) then
         if (widthLonger) then
-            x = (love.graphics.getWidth() - (love.graphics.getHeight() / (factor))) / 2
+            x = (love.graphics.getWidth() - (love.graphics.getHeight() * (factor))) / 2
         else
             y = (love.graphics.getHeight() - (love.graphics.getWidth() / (factor))) / 2
         end
@@ -71,11 +71,11 @@ function Sizer.translate(x, y)
     ---@type integer
     local _y = 0
     if (widthLonger) then
-        _x = (love.graphics.getWidth() - (love.graphics.getHeight() / (factor))) / 2
+        _x = (love.graphics.getWidth() - (love.graphics.getHeight() * (factor))) / 2
     else
         _y = (love.graphics.getHeight() - (love.graphics.getWidth() / (factor))) / 2
     end
-    return (x - _x), (y - _y) 
+    return (x - _x) / scalar, (y - _y) / scalar
 end
 
 ---Scales delta changes from screen space changes
