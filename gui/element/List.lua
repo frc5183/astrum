@@ -8,6 +8,7 @@ local TextInput = require "lib.gui.element.TextInput"
 local AdapterButton = require "lib.gui.element.AdapterButton"
 local ScrollBar = require "lib.gui.element.ScrollBar"
 local VisualButton = require "lib.gui.element.VisualButton"
+local TextRectangle = require "lib.gui.element.TextRectangle"
 -- Assembler
 ---@param minimum integer the amount on the top of the List that will be left blank
 ---@param x number
@@ -100,6 +101,18 @@ return function(minimum, x, y, width, height, color, spacing)
     ---@param mode "normal"|"password"|"multiwrap"|"multinowrap"|nil
     function out.TextInput(width, height, color, text, fontsize, align, mode)
         local t = TextInput(0, theight, width, height, color, text, fontsize, align, mode)
+        add(t)
+        return t
+    end
+
+    ---@param width integer
+    ---@param height integer
+    ---@param color Color
+    ---@param text string
+    ---@param fontsize number
+    ---@param align "left"|"center"|"right"
+    function out.TextRectangle(width, height, color, text, fontsize, align)
+        local t = TextRectangle(0, theight, width, height, color, text, fontsize, align)
         add(t)
         return t
     end
