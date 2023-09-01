@@ -45,7 +45,6 @@ return function(minimum, x, y, width, height, color, spacing)
         safety.ensureInstanceType(obj, Base, "obj")
         table.insert(objects, obj)
         theight = theight + obj.height + spacing
-        twidth = math.max(obj.width, twidth)
         print(theight, twidth)
     end
 
