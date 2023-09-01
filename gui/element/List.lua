@@ -45,7 +45,6 @@ return function(minimum, x, y, width, height, color, spacing)
         safety.ensureInstanceType(obj, Base, "obj")
         table.insert(objects, obj)
         theight = theight + obj.height + spacing
-        print(theight, twidth)
     end
 
     ---@param width integer
