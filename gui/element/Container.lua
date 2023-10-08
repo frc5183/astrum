@@ -97,10 +97,12 @@ end
 ---@param pt Point2D
 function Container:update(dt, pt)
   local pt_ = self.adapter(pt, 1, 1)
-  ---@param k integer
-  ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:update(dt, pt_)
+  if (pt_.x ~= -1 and pt_.y ~= -1) then
+    ---@param k integer
+    ---@param v Base
+    for k, v in pairs(self.objects) do
+      v:update(dt, pt_)
+    end
   end
   if (self.widthbar) then
     self.widthbar:update(dt, pt)
@@ -138,10 +140,12 @@ end
 ---@param y number
 function Container:wheelmoved(dx, dy, x, y)
   local pt, _a, _b = self.adapter(math2.Point2D(x, y), 1, 1)
-  ---@param k integer
-  ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:wheelmoved(dx, dy, pt.x, pt.y)
+  if (pt.x ~= -1 and pt.y ~= -1) then
+    ---@param k integer
+    ---@param v Base
+    for k, v in pairs(self.objects) do
+      v:wheelmoved(dx, dy, pt.x, pt.y)
+    end
   end
 end
 
@@ -152,10 +156,12 @@ end
 ---@param istouch boolean
 function Container:mousemoved(x, y, dx, dy, istouch)
   local pt = self.adapter(math2.Point2D(x, y), 1, 1)
-  ---@param k integer
-  ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:mousemoved(x, y, dx, dy, istouch)
+  if (pt.x ~= -1 and pt.y ~= -1) then
+    ---@param k integer
+    ---@param v Base
+    for k, v in pairs(self.objects) do
+      v:mousemoved(x, y, dx, dy, istouch)
+    end
   end
 end
 
@@ -174,10 +180,12 @@ function Container:press(pt, button, presses, ...)
   safety.ensurePoint2D(pt, "pt")
   safety.ensureNumber(button, "button")
   safety.ensureNumber(presses, "presses")
-  ---@param k integer
-  ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:press(pt, button, presses, ...)
+  if (pt.x ~= -1 and pt.y ~= -1) then
+    ---@param k integer
+    ---@param v Base
+    for k, v in pairs(self.objects) do
+      v:press(pt, button, presses, ...)
+    end
   end
 end
 
@@ -196,10 +204,12 @@ function Container:click(pt, button, presses, ...)
   safety.ensurePoint2D(pt, "pt")
   safety.ensureNumber(button, "button")
   safety.ensureNumber(presses, "presses")
-  ---@param k integer
-  ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:click(pt, button, presses, ...)
+  if (pt.x ~= -1 and pt.y ~= -1) then
+    ---@param k integer
+    ---@param v Base
+    for k, v in pairs(self.objects) do
+      v:click(pt, button, presses, ...)
+    end
   end
 end
 
