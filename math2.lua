@@ -12,6 +12,11 @@ local Point2D = Class("Point2D")
 ---@field y number
 ---@overload fun(x:number, y:number, polar:boolean):Vector2D
 local Vector2D = Class("Vector2D")
+---@class LineSegment
+---@field pt1 Point2D
+---@field pt2 Point2D
+---@overload fun(pt1:Point2D, pt2:Point2D):LineSegment
+local LineSegment = Class("LineSegment")
 --- Compares 2 Point2Ds by comparing their individual coordinates
 ---@param point1 Point2D
 ---@param point2 Point2D
@@ -45,13 +50,29 @@ Vector2D.__eq = function(vector1, vector2)
 	safety.ensureInstanceType(vector2, Vector2D, "vector2")
 	return vector1.x == vector2.x and vector1.y == vector2.y
 end
---- Turns a Vector2D into a strign, listing it's components in both cartesian and polar forms.
+--- Turns a Vector2D into a string, listing it's components in both cartesian and polar forms.
 ---@param vector Vector2D
 ---@return string
 Vector2D.__tostring = function(vector)
 	return "2D Vector: {X " ..
 		vector.x ..
 		", Y " .. vector.y .. ", Angle (Radians) " .. vector:getAngle() .. ", MAGNITUDE " .. vector:getMagnitude() .. "}"
+end
+--- Compares 2 LineSegments by comparing their individual components
+---@param line1 LineSegment
+---@param line2 LineSegment
+---@return boolean
+LineSegment.__eq = function(line1, line2)
+   safety.ensureInstanceType(line1, LineSegment, "line1")
+   safety.ensureInstanceType(line2, LineSegment, "line2")
+   return (line1.pt1 == line2.pt1 and line1.pt2 == line2.pt2) or (line1.pt1 == line2.pt2 and line1.pt2 == line2.pt1)
+end
+--- Turns a LineSegment into a string
+---@param line LineSegment
+---@return string
+LineSegment.__tostring = function(line)
+	safety.ensureInstanceType(line, LineSegment, "line")
+	return "Line Segment: {pt1 " .. tostring(line.pt1) .. ", pt2, " .. tostring(line.pt2)
 end
 --- Returns the magnitude of the Vector2D
 ---@return number
@@ -63,6 +84,16 @@ end
 ---@return number
 function Vector2D:getAngle()
 	return math.atan2(self.y, self.x)
+end
+
+--- A Two Dimentional Line Seugment
+---@param pt1 Point2D
+---@param pt2 Point2D
+function LineSegment:initialize(pt1, pt2)
+	safety.ensureInstanceType(pt1, Point2D, "pt1")
+	safety.ensureInstanceType(pt2, Point2D, "pt2")
+	self.pt1=pt1
+	self.pt2=pt2
 end
 
 --- A Two Dimensional Vector, able to be constructed from either cartesian or polar form.
