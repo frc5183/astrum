@@ -63,9 +63,9 @@ end
 ---@param line2 LineSegment
 ---@return boolean
 LineSegment.__eq = function(line1, line2)
-   safety.ensureInstanceType(line1, LineSegment, "line1")
-   safety.ensureInstanceType(line2, LineSegment, "line2")
-   return (line1.pt1 == line2.pt1 and line1.pt2 == line2.pt2) or (line1.pt1 == line2.pt2 and line1.pt2 == line2.pt1)
+	safety.ensureInstanceType(line1, LineSegment, "line1")
+	safety.ensureInstanceType(line2, LineSegment, "line2")
+	return (line1.pt1 == line2.pt1 and line1.pt2 == line2.pt2) or (line1.pt1 == line2.pt2 and line1.pt2 == line2.pt1)
 end
 --- Turns a LineSegment into a string
 ---@param line LineSegment
@@ -92,8 +92,8 @@ end
 function LineSegment:initialize(pt1, pt2)
 	safety.ensureInstanceType(pt1, Point2D, "pt1")
 	safety.ensureInstanceType(pt2, Point2D, "pt2")
-	self.pt1=pt1
-	self.pt2=pt2
+	self.pt1 = pt1
+	self.pt2 = pt2
 end
 
 --- A Two Dimensional Vector, able to be constructed from either cartesian or polar form.
