@@ -2,6 +2,10 @@
 local Class = require("lib.external.class")
 local safety = require("lib.safety")
 local math = math
+---@class Undefined
+---@overload fun():Undefined
+local UndefinedClass = Class("Undefined")
+local Undefined = UndefinedClass()
 ---@class Point2D
 ---@field x number
 ---@field y number
@@ -63,9 +67,9 @@ end
 ---@param line2 LineSegment
 ---@return boolean
 LineSegment.__eq = function(line1, line2)
-   safety.ensureInstanceType(line1, LineSegment, "line1")
-   safety.ensureInstanceType(line2, LineSegment, "line2")
-   return (line1.pt1 == line2.pt1 and line1.pt2 == line2.pt2) or (line1.pt1 == line2.pt2 and line1.pt2 == line2.pt1)
+	safety.ensureInstanceType(line1, LineSegment, "line1")
+	safety.ensureInstanceType(line2, LineSegment, "line2")
+	return (line1.pt1 == line2.pt1 and line1.pt2 == line2.pt2) or (line1.pt1 == line2.pt2 and line1.pt2 == line2.pt1)
 end
 --- Turns a LineSegment into a string
 ---@param line LineSegment
@@ -92,10 +96,18 @@ end
 function LineSegment:initialize(pt1, pt2)
 	safety.ensureInstanceType(pt1, Point2D, "pt1")
 	safety.ensureInstanceType(pt2, Point2D, "pt2")
-	self.pt1=pt1
-	self.pt2=pt2
+	self.pt1 = pt1
+	self.pt2 = pt2
 end
-
+--- Gets the slope of the LineSegment
+---@return number|Undefined
+function LineSegment:getSlope()
+	if (self.pt2.x-self.pt1.x==0) then
+		return Undefined
+	else
+		return (self.pt2.y-self.pt1.y)/(self.pt2.x-self.pt1.x)
+	end
+end
 --- A Two Dimensional Vector, able to be constructed from either cartesian or polar form.
 ---@param x number the x coordinate OR angle in radians if polar
 ---@param y number the y coordinate OR magnitude if polar
