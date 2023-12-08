@@ -26,8 +26,6 @@ function VisualButton:initialize(x, y, width, height, color)
 end
 
 --- Draws the VisualButton
-function VisualButton:draw()
-  self:drawRectangle()
-end
+function VisualButton:draw() self:drawRectangle() end
 
 return VisualButton

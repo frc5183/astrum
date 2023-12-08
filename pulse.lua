@@ -44,7 +44,8 @@ function Pulse:onEvent(event, id, func)
   safety.ensureString(id, "id")
   safety.ensureFunction(func, "func")
   if (type(self._events[event] ~= "table")) then
-    safety.ensureTable(self._events[event], "event " .. event .. " unregistered. Register using Pulse:newEvent(event).")
+    safety.ensureTable(self._events[event], "event " .. event ..
+                         " unregistered. Register using Pulse:newEvent(event).")
   end
   self._events[event][id] = func
 end
@@ -57,9 +58,8 @@ function Pulse:removeOnEvent(event, id)
   safety.ensureString(id, "id")
 
   if (type(self._events[event] ~= "table")) then
-    safety.ensureTable(self._events[event],
-      "event " ..
-      event .. " unregistered. Register using Pulse:newEvent(event). Perhaps you already unregistered the event?")
+    safety.ensureTable(self._events[event], "event " .. event ..
+                         " unregistered. Register using Pulse:newEvent(event). Perhaps you already unregistered the event?")
   end
 end
 
@@ -69,7 +69,8 @@ end
 function Pulse:emit(event, ...)
   safety.ensureString(event, "event")
   if (type(self._events[event] ~= "table")) then
-    safety.ensureTable(self._events[event], "event " .. event .. " unregistered. Register using Pulse:newEvent(event).")
+    safety.ensureTable(self._events[event], "event " .. event ..
+                         " unregistered. Register using Pulse:newEvent(event).")
   end
   self._cache[event] = {}
   ---@param k string
@@ -91,12 +92,15 @@ function Pulse:require(event, id, ...)
   safety.ensureString(event, "event")
   safety.ensureString(id, "id")
   if (type(self._events[event] ~= "table")) then
-    safety.ensureTable(self._events[event], "event " .. event .. " unregistered. Register using Pulse:newEvent(event).")
+    safety.ensureTable(self._events[event], "event " .. event ..
+                         " unregistered. Register using Pulse:newEvent(event).")
   end
   safety.ensureFunction(self._events[event][id],
-    "callback function in Pulse.events[" .. event .. "][" .. id .. "]. This function may be unregistered in the Pulse")
+                        "callback function in Pulse.events[" .. event .. "][" ..
+                          id ..
+                          "]. This function may be unregistered in the Pulse")
   safety.ensureTable(self._cache[event],
-    "self._cache[event] does not exist. This probably means Pulse:require() was called outside of Pulse:emit()'s callbacks. ")
+                     "self._cache[event] does not exist. This probably means Pulse:require() was called outside of Pulse:emit()'s callbacks. ")
   if (not self._cache[event][id]) then
     self._events[event][id](...)
     self._cache[event][id] = true

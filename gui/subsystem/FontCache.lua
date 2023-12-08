@@ -7,9 +7,7 @@ local safety = require "lib.safety"
 ---@return love.Font
 function fontCache:getFont(num)
   safety.ensureNumber(num, "num")
-  if (not fontCache[num]) then
-    fontCache[num] = love.graphics.newFont(num)
-  end
+  if (not fontCache[num]) then fontCache[num] = love.graphics.newFont(num) end
   return fontCache[num]
 end
 

@@ -24,7 +24,8 @@ local function load_dir(dir, script_type)
     ---@type string
     local path = dir .. "/" .. filename
     if script_type == "Local" then
-      go = (not (love.filesystem.getRealDirectory(path) == love.filesystem.getSaveDirectory()))
+      go = (not (love.filesystem.getRealDirectory(path) ==
+             love.filesystem.getSaveDirectory()))
     end
     if (go) then
       ---@type {type:"directory"|"file"|"other"|"symlink", size:number, modtime:number}
@@ -47,15 +48,14 @@ end
 ---@type boolean
 local external = false
 --- Enables external scripts
-function AssetLoader.enableExternal()
-  external = true
-end
+function AssetLoader.enableExternal() external = true end
 
 --- Starts loading scripts
 function AssetLoader.start()
   load_dir("asset/script", "Local")
   if (external) then
-    load_dir(love.filesystem.getSaveDirectory() .. "/external/asset/script", "External")
+    load_dir(love.filesystem.getSaveDirectory() .. "/external/asset/script",
+             "External")
   end
 end
 
@@ -76,13 +76,12 @@ function AssetLoader.update()
   end
   ---@param i number
   ---@param v number
-  for i, v in ipairs(rm) do
-    table.remove(threads, v)
-  end
+  for i, v in ipairs(rm) do table.remove(threads, v) end
   ---@type {category:string, id:string, asset:any}
   local pop = channel:pop()
   while (pop ~= nil) do
-    if (type(pop) == "table" and type(pop.category) == "string" and type(pop.id) == "string" and type(pop.asset) ~= "nil") then
+    if (type(pop) == "table" and type(pop.category) == "string" and type(pop.id) ==
+      "string" and type(pop.asset) ~= "nil") then
       pcall(AssetManager.registerCategory, pop.category)
       AssetManager.registerAsset(pop.category, pop.id, pop.asset)
     else
@@ -90,16 +89,12 @@ function AssetLoader.update()
     end
     pop = channel:pop()
   end
-  if #threads == 0 then
-    isFinished = true
-  end
+  if #threads == 0 then isFinished = true end
 end
 
 --- Returns if all scripts are finished running
 ---@return boolean
-function AssetLoader.isFinished()
-  return isFinished
-end
+function AssetLoader.isFinished() return isFinished end
 
 --[[
 IMPORTANT NOTES:

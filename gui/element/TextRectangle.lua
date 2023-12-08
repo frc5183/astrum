@@ -1,7 +1,7 @@
 -- Imports
 local class = require "lib.external.class"
 local Rectangle = require "lib.gui.mixin.RoundRectangle"
-local Text = require"lib.gui.mixin.Text"
+local Text = require "lib.gui.mixin.Text"
 local safety = require "lib.safety"
 local Base = require "lib.gui.element.Base"
 ---@class TextRectangle : Base, Rectangle, Text
@@ -18,22 +18,23 @@ TextRectangle:include(Rectangle)
 ---@param text string
 ---@param fontsize number
 ---@param align "left"|"center"|"right"
-function TextRectangle:initialize(x, y, width, height, color, text, fontsize, align)
-    safety.ensureNumber(x, "x")
-    safety.ensureNumber(y, "y")
-    safety.ensureNumberOver(width, 0, "width")
-    safety.ensureNumberOver(height, 0, "height")
-    safety.ensureColor(color, "color")
-    safety.ensureString(text, "text")
-    safety.ensureIntegerOver(fontsize, 0, "fontsize")
-    safety.ensureString(align, "align")
-    self:initRectangle(x, y, width, height, color)
-    self:initText(x, y, width, height, text, fontsize, align)
-  end
-  --- Draws the TextRectangle
+function TextRectangle:initialize(x, y, width, height, color, text, fontsize,
+                                  align)
+  safety.ensureNumber(x, "x")
+  safety.ensureNumber(y, "y")
+  safety.ensureNumberOver(width, 0, "width")
+  safety.ensureNumberOver(height, 0, "height")
+  safety.ensureColor(color, "color")
+  safety.ensureString(text, "text")
+  safety.ensureIntegerOver(fontsize, 0, "fontsize")
+  safety.ensureString(align, "align")
+  self:initRectangle(x, y, width, height, color)
+  self:initText(x, y, width, height, text, fontsize, align)
+end
+--- Draws the TextRectangle
 function TextRectangle:draw()
-    self:drawRectangle()
-    self:drawText()
-  end
+  self:drawRectangle()
+  self:drawText()
+end
 -- Return
-  return TextRectangle
+return TextRectangle

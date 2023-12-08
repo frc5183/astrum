@@ -1,5 +1,4 @@
 -- Imports
-
 ---@class Button
 ---@field x number
 ---@field y number
@@ -73,7 +72,8 @@ end
 ---@return boolean
 function button:contains(point)
   safety.ensurePoint2D(point, "point")
-  return point.x >= self.x and point.x <= self.x + self.width and point.y >= self.y and point.y <= self.y + self.height
+  return point.x >= self.x and point.x <= self.x + self.width and point.y >=
+           self.y and point.y <= self.y + self.height
 end
 
 --- Triggers all click callbacks
@@ -84,9 +84,7 @@ end
 function button:click(pt, button, presses, ...)
   ---@param k integer
   ---@param v fun(pt:Point2D, button:number, presses:number, ...:any):any
-  for k, v in ipairs(self._callbacks_click) do
-    v(pt, button, presses, ...)
-  end
+  for k, v in ipairs(self._callbacks_click) do v(pt, button, presses, ...) end
 end
 
 --- Triggers all press callbacks
@@ -97,9 +95,7 @@ end
 function button:press(pt, button, presses, ...)
   ---@param k integer
   ---@param v fun(pt:Point2D, button:number, presses:number, ...:any):any
-  for k, v in ipairs(self._callbacks_press) do
-    v(pt, button, presses, ...)
-  end
+  for k, v in ipairs(self._callbacks_press) do v(pt, button, presses, ...) end
 end
 
 -- Return

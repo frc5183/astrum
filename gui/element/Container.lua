@@ -48,29 +48,26 @@ function Container:initialize(x, y, width, height, color, twidth, theight)
   self.width = width
   self.height = height
   self.color = color
-  if (twidth < width) then
-    error("twidth must be at least width")
-  end
-  if (theight < height) then
-    error("theight must be at least height")
-  end
+  if (twidth < width) then error("twidth must be at least width") end
+  if (theight < height) then error("theight must be at least height") end
 
   self.adapter = function(pt, button, presses)
     local x, y = pt.x, pt.y
-    if (x < self.x or x > self.x + self.width or y < self.y or y > self.y + self.height) then
-      return math2.Point2D(-1, -1), button, presses
-    end
+    if (x < self.x or x > self.x + self.width or y < self.y or y > self.y +
+      self.height) then return math2.Point2D(-1, -1), button, presses end
     x = x - self.x + self.posx
     y = y - self.y + self.posy
     return math2.Point2D(x, y), button, presses
   end
   self.objects = {}
   if (twidth > width) then
-    self.widthbar = ScrollBar(0, height - 20, width, 20, width / twidth, self.color, false)
+    self.widthbar = ScrollBar(0, height - 20, width, 20, width / twidth,
+                              self.color, false)
     self.widthbar:enable()
   end
   if (theight > height) then
-    self.heightbar = ScrollBar(width - 20, 0, 20, height, height / theight, self.color, true)
+    self.heightbar = ScrollBar(width - 20, 0, 20, height, height / theight,
+                               self.color, true)
     self.heightbar:enable()
   end
 end
@@ -83,9 +80,7 @@ function Container:draw()
   love.graphics.setScissor(self.posx, self.posy, self.width, self.height)
   ---@param k integer
   ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:draw()
-  end
+  for k, v in pairs(self.objects) do v:draw() end
   love.graphics.setCanvas(oldCanvas)
   love.graphics.setScissor(ox, oy, owidth, oheight)
   love.graphics.draw(self.canvas, self.x - self.posx, self.y - self.posy)
@@ -100,9 +95,7 @@ function Container:update(dt, pt)
   if (pt_.x ~= -1 and pt_.y ~= -1) then
     ---@param k integer
     ---@param v Base
-    for k, v in pairs(self.objects) do
-      v:update(dt, pt_)
-    end
+    for k, v in pairs(self.objects) do v:update(dt, pt_) end
   end
   if (self.widthbar) then
     self.widthbar:update(dt, pt)
@@ -118,9 +111,7 @@ end
 function Container:textinput(text)
   ---@param k integer
   ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:textinput(text)
-  end
+  for k, v in pairs(self.objects) do v:textinput(text) end
 end
 
 ---@param key string
@@ -129,9 +120,7 @@ end
 function Container:keypressed(key, scancode, isrepeat)
   ---@param k integer
   ---@param v Base
-  for k, v in pairs(self.objects) do
-    v:keypressed(key, scancode, isrepeat)
-  end
+  for k, v in pairs(self.objects) do v:keypressed(key, scancode, isrepeat) end
 end
 
 ---@param dx number
@@ -143,9 +132,7 @@ function Container:wheelmoved(dx, dy, x, y)
   if (pt.x ~= -1 and pt.y ~= -1) then
     ---@param k integer
     ---@param v Base
-    for k, v in pairs(self.objects) do
-      v:wheelmoved(dx, dy, pt.x, pt.y)
-    end
+    for k, v in pairs(self.objects) do v:wheelmoved(dx, dy, pt.x, pt.y) end
   end
 end
 
@@ -159,9 +146,7 @@ function Container:mousemoved(x, y, dx, dy, istouch)
   if (pt.x ~= -1 and pt.y ~= -1) then
     ---@param k integer
     ---@param v Base
-    for k, v in pairs(self.objects) do
-      v:mousemoved(x, y, dx, dy, istouch)
-    end
+    for k, v in pairs(self.objects) do v:mousemoved(x, y, dx, dy, istouch) end
   end
 end
 
@@ -170,12 +155,8 @@ end
 ---@param presses number
 ---@param ... any
 function Container:press(pt, button, presses, ...)
-  if (self.heightbar) then
-    self.heightbar:press(pt, button, presses, ...)
-  end
-  if (self.widthbar) then
-    self.widthbar:press(pt, button, presses, ...)
-  end
+  if (self.heightbar) then self.heightbar:press(pt, button, presses, ...) end
+  if (self.widthbar) then self.widthbar:press(pt, button, presses, ...) end
   local pt = self.adapter(pt, 1, 1)
   safety.ensurePoint2D(pt, "pt")
   safety.ensureNumber(button, "button")
@@ -183,9 +164,7 @@ function Container:press(pt, button, presses, ...)
   if (pt.x ~= -1 and pt.y ~= -1) then
     ---@param k integer
     ---@param v Base
-    for k, v in pairs(self.objects) do
-      v:press(pt, button, presses, ...)
-    end
+    for k, v in pairs(self.objects) do v:press(pt, button, presses, ...) end
   end
 end
 
@@ -194,12 +173,8 @@ end
 ---@param presses number
 ---@param ... any
 function Container:click(pt, button, presses, ...)
-  if (self.heightbar) then
-    self.heightbar:click(pt, button, presses, ...)
-  end
-  if (self.widthbar) then
-    self.widthbar:click(pt, button, presses, ...)
-  end
+  if (self.heightbar) then self.heightbar:click(pt, button, presses, ...) end
+  if (self.widthbar) then self.widthbar:click(pt, button, presses, ...) end
   local pt = self.adapter(pt, 1, 1)
   safety.ensurePoint2D(pt, "pt")
   safety.ensureNumber(button, "button")
@@ -207,9 +182,7 @@ function Container:click(pt, button, presses, ...)
   if (pt.x ~= -1 and pt.y ~= -1) then
     ---@param k integer
     ---@param v Base
-    for k, v in pairs(self.objects) do
-      v:click(pt, button, presses, ...)
-    end
+    for k, v in pairs(self.objects) do v:click(pt, button, presses, ...) end
   end
 end
 

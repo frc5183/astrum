@@ -1,5 +1,4 @@
 -- Imports
-
 ---@class Text
 ---@field x number
 ---@field y number
@@ -42,10 +41,19 @@ function Text:initText(x, y, width, height, text, fontsize, align)
   self.font = FontCache:getFont(fontsize)
   ---@diagnostic disable-next-line: undefined-field
   self.text = love.graphics.newTextBatch(self.font)
-  self.textCanvas = love.graphics.newCanvas(self.width - 2 * math.min(self.width / 8, self.height / 8),
-    math.floor((self.height - (2 * math.min(self.width / 8, self.height / 8))) / self.font:getHeight()) *
-    self.font:getHeight())
-  self.text:setf(text, self.width - 2 * math.min(self.width / 8, self.height / 8), self.align)
+  self.textCanvas = love.graphics.newCanvas(self.width - 2 *
+                                              math.min(self.width / 8,
+                                                       self.height / 8),
+                                            math.floor(
+                                              (self.height -
+                                                (2 *
+                                                  math.min(self.width / 8,
+                                                           self.height / 8))) /
+                                                self.font:getHeight()) *
+                                              self.font:getHeight())
+  self.text:setf(text,
+                 self.width - 2 * math.min(self.width / 8, self.height / 8),
+                 self.align)
   self._text = text
   self.sx = self.sx or 1
   self.sy = self.sy or 1
@@ -63,8 +71,10 @@ function Text:drawText()
   love.graphics.push()
   love.graphics.translate(self.x + (self.width / 2), self.y + (self.height / 2))
   love.graphics.scale(self.sx, self.sy)
-  love.graphics.draw(self.textCanvas, -(self.width / 2 - math.min(self.width / 8, self.height / 8)),
-    -(self.height / 2 - math.min(self.width / 8, self.height / 8)))
+  love.graphics.draw(self.textCanvas, -(self.width / 2 -
+                       math.min(self.width / 8, self.height / 8)),
+                     -(self.height / 2 -
+                       math.min(self.width / 8, self.height / 8)))
   love.graphics.pop()
 end
 
@@ -73,14 +83,13 @@ end
 function Text:changeText(text)
   safety.ensureString(text)
   self._text = text
-  self.text:setf(text, self.width - math.min(self.width / 8, self.height / 8), self.align)
+  self.text:setf(text, self.width - math.min(self.width / 8, self.height / 8),
+                 self.align)
 end
 
 --- Gets the text
 ---@return string
-function Text:getText()
-  return self._text
-end
+function Text:getText() return self._text end
 
 --- Alias for changeText
 ---@param text string

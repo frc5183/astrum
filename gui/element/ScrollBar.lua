@@ -72,7 +72,7 @@ function ScrollBar:initialize(x, y, width, height, percentage, color, isVertical
   ---@type integer
   local oldWidth = love.graphics.getLineWidth()
   ---@type table
-  local oldColor = { love.graphics.getColor() }
+  local oldColor = {love.graphics.getColor()}
   love.graphics.setColor(color:unpack())
   love.graphics.setLineWidth(10)
   if (isVertical) then
@@ -105,9 +105,7 @@ end
 ---@param pos number
 function ScrollBar:setPosition(pos)
   safety.ensureNumber(pos)
-  if (pos < 0 or pos > 1) then
-    error("pos must be between 0 and 1")
-  end
+  if (pos < 0 or pos > 1) then error("pos must be between 0 and 1") end
   if self.isVertical then
     self.button.y = self.y + ((self.height - self.button.height) * pos)
   else
@@ -140,37 +138,32 @@ function ScrollBar:update(dt, pt)
   if (self.startpt) then
     self.mvpt = pt
 
-    self.dtpt = math2.Point2D(self.mvpt.x - self.opt.x, self.mvpt.y - self.opt.y)
+    self.dtpt =
+      math2.Point2D(self.mvpt.x - self.opt.x, self.mvpt.y - self.opt.y)
     if self.isVertical then
-      self.button.y = clamp(self.button.y + self.dtpt.y, self.y, self.y + self.height * (1 - self.percentage))
+      self.button.y = clamp(self.button.y + self.dtpt.y, self.y,
+                            self.y + self.height * (1 - self.percentage))
     else
-      self.button.x = clamp(self.button.x + self.dtpt.x, self.x, self.x + self.width * (1 - self.percentage))
+      self.button.x = clamp(self.button.x + self.dtpt.x, self.x,
+                            self.x + self.width * (1 - self.percentage))
     end
     self.opt = pt
   end
 end
 
 --- Enables the ScrollBar
-function ScrollBar:enable()
-  self.enabled = true
-end
+function ScrollBar:enable() self.enabled = true end
 
 function ScrollBar:click(pt, button, presses, ...)
-  if (self.enabled) then
-    self.button:click(pt, button, presses, ...)
-  end
+  if (self.enabled) then self.button:click(pt, button, presses, ...) end
 end
 
 function ScrollBar:press(pt, button, presses, ...)
-  if (self.enabled) then
-    self.button:press(pt, button, presses, ...)
-  end
+  if (self.enabled) then self.button:press(pt, button, presses, ...) end
 end
 
 --- Disables the ScrollBar
-function ScrollBar:disable()
-  self.disabled = true
-end
+function ScrollBar:disable() self.disabled = true end
 
 -- Return
 return ScrollBar
