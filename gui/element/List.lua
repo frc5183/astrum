@@ -90,11 +90,11 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param width integer
   ---@param height integer
   ---@param color Color
-  ---@param twidth integer
-  ---@param theight integer
+  ---@param c_twidth integer
+  ---@param c_theight integer
   ---@return Container
-  function out.Container(width, height, color, twidth, theight)
-    local t = Container(0, theight, width, height, color, twidth, theight)
+  function out.Container(width, height, color, c_twidth, c_theight)
+    local t = Container(0, theight, width, height, color, c_twidth, c_theight)
     add(t)
     return t
   end
@@ -131,7 +131,7 @@ return function(minimum, x, y, width, height, color, spacing)
     add(t)
     return t
   end
-
+  out.add=add
   function out.construct()
     if (complete) then
       error("You have already constructed this list, you cannot add more")
