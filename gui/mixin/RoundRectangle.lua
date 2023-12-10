@@ -33,7 +33,11 @@ function rectangle:initRectangle(x, y, width, height, color, int_color)
     self.int_color = color
   end
   self.rectangleCanvas = love.graphics.newCanvas(width, height)
-  self.color = Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a)
+  if (int_color == nil) then
+    self.color = Color(color.r * 0.5, color.g * 0.5, color.b * 0.5, color.a)
+  else
+    self.color = color
+  end
   self.sx = 1
   self.sy = 1
 end
