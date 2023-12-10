@@ -15,14 +15,18 @@ VisualButton:include(Rectangle)
 ---@param width integer
 ---@param height integer
 ---@param color Color
-function VisualButton:initialize(x, y, width, height, color)
+---@param internalcolor Color|nil
+function VisualButton:initialize(x, y, width, height, color, internalcolor)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")
   safety.ensureNumberOver(height, 0, "height")
   safety.ensureColor(color, "color")
+  if (internalcolor ~= nil) then
+    safety.ensureColor(internalcolor, "internalcolor")
+  end
   self:initButton(x, y, width, height)
-  self:initRectangle(x, y, width, height, color)
+  self:initRectangle(x, y, width, height, color, internalcolor)
 end
 
 --- Draws the VisualButton

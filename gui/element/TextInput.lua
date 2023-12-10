@@ -54,8 +54,9 @@ local list = {}
 ---@param fontsize integer
 ---@param align "left"|"center"|"right"
 ---@param mode "normal"|"password"|"multiwrap"|"multinowrap"|nil
+---@param internalcolor Color
 function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
-                              mode)
+                              mode, internalcolor)
   table.insert(list, self)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
@@ -79,7 +80,12 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   else
     self.mode = "multiwrap"
   end
-  self:initRectangle(x, y, width, height, color, Color(0, 0, 0, 1))
+  if (internalcolor ~= nil) then
+    safety.ensureColor(internalcolor, "internalcolor")
+  else
+    internalcolor = Color(0, 0, 0, 1) -- Black
+  end
+  self:initRectangle(x, y, width, height, color, internalcolor)
   self.x = x
   self.y = y
   self.width = width

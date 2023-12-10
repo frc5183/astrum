@@ -18,8 +18,9 @@ TextRectangle:include(Rectangle)
 ---@param text string
 ---@param fontsize number
 ---@param align "left"|"center"|"right"
+---@param internalcolor Color|nil
 function TextRectangle:initialize(x, y, width, height, color, text, fontsize,
-                                  align)
+                                  align, internalcolor)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")
@@ -28,7 +29,10 @@ function TextRectangle:initialize(x, y, width, height, color, text, fontsize,
   safety.ensureString(text, "text")
   safety.ensureIntegerOver(fontsize, 0, "fontsize")
   safety.ensureString(align, "align")
-  self:initRectangle(x, y, width, height, color)
+  if (internalcolor ~= nil) then
+    safety.ensureColor(internalcolor, "internalcolor")
+  end
+  self:initRectangle(x, y, width, height, color, internalcolor)
   self:initText(x, y, width, height, text, fontsize, align)
 end
 --- Draws the TextRectangle

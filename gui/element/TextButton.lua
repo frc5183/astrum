@@ -22,7 +22,8 @@ TextButton:include(Scaler)
 ---@param text string
 ---@param fontsize number
 ---@param align "left"|"center"|"right"
-function TextButton:initialize(x, y, width, height, color, text, fontsize, align)
+---@param internalcolor Color|nil
+function TextButton:initialize(x, y, width, height, color, text, fontsize, align, internalcolor)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")
@@ -31,8 +32,11 @@ function TextButton:initialize(x, y, width, height, color, text, fontsize, align
   safety.ensureString(text, "text")
   safety.ensureIntegerOver(fontsize, 0, "fontsize")
   safety.ensureString(align, "align")
+  if (internalcolor ~= nil) then
+    safety.ensureColor(internalcolor, "internalcolor")
+  end
   self:initButton(x, y, width, height)
-  self:initRectangle(x, y, width, height, color)
+  self:initRectangle(x, y, width, height, color, internalcolor)
   self:initText(x, y, width, height, text, fontsize, align)
   self:initScaler(x, y, width, height)
 end
