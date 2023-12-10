@@ -7,7 +7,7 @@ local safety = require "lib.safety"
 local Scaler = require "lib.gui.mixin.Scaler"
 local Base = require "lib.gui.element.Base"
 ---@class TextButton : Base, Text, Scaler, Button, Rectangle
----@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right"):TextButton
+---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right", internalcolor:Color|nil):TextButton
 local TextButton = class("TextButton", Base)
 TextButton:include(Button)
 TextButton:include(Rectangle)
@@ -23,7 +23,8 @@ TextButton:include(Scaler)
 ---@param fontsize number
 ---@param align "left"|"center"|"right"
 ---@param internalcolor Color|nil
-function TextButton:initialize(x, y, width, height, color, text, fontsize, align, internalcolor)
+function TextButton:initialize(x, y, width, height, color, text, fontsize,
+                               align, internalcolor)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")

@@ -6,6 +6,7 @@ local safety = require "lib.safety"
 local InputField = require "lib.external.InputField"
 local Base = require "lib.gui.element.Base"
 ---@class TextInput: Base, Rectangle
+---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right", mode:"normal"|"password"|"multiwrap"|"multinowrap", internalcolor:Color|nil):TextInput
 ---@field x number
 ---@field y number
 ---@field width integer
@@ -54,7 +55,7 @@ local list = {}
 ---@param fontsize integer
 ---@param align "left"|"center"|"right"
 ---@param mode "normal"|"password"|"multiwrap"|"multinowrap"|nil
----@param internalcolor Color
+---@param internalcolor Color|nil
 function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
                               mode, internalcolor)
   table.insert(list, self)

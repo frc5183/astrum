@@ -5,7 +5,7 @@ local Text = require "lib.gui.mixin.Text"
 local safety = require "lib.safety"
 local Base = require "lib.gui.element.Base"
 ---@class TextRectangle : Base, Rectangle, Text
----@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right"):TextRectangle
+---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right", internalcolor:Color|nil):TextRectangle
 local TextRectangle = class("TextRectangle", Base)
 TextRectangle:include(Text)
 TextRectangle:include(Rectangle)

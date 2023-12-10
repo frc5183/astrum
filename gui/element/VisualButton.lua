@@ -5,7 +5,7 @@ local Rectangle = require "lib.gui.mixin.RoundRectangle"
 local safety = require "lib.safety"
 local Base = require "lib.gui.element.Base"
 ---@class VisualButton : Base, Button, Rectangle
----@overload fun(x:number, y:number, width:number, height:number, color:Color):VisualButton
+---@overload fun(x:number, y:number, width:number, height:number, color:Color, internalcolor:Color|nil):VisualButton
 local VisualButton = class("VisualButton", Base)
 VisualButton:include(Button)
 VisualButton:include(Rectangle)

@@ -53,10 +53,12 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param text string
   ---@param fontsize number
   ---@param align "left"|"center"|"right"
+  ---@param internalcolor Color|nil
   ---@return TextButton
-  function out.TextButton(width, height, color, text, fontsize, align)
-    local t =
-      TextButton(0, theight, width, height, color, text, fontsize, align)
+  function out.TextButton(width, height, color, text, fontsize, align,
+                          internalcolor)
+    local t = TextButton(0, theight, width, height, color, text, fontsize,
+                         align, internalcolor)
     add(t)
     return t
   end
@@ -64,9 +66,10 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param width integer
   ---@param height integer
   ---@param color Color
+  ---@param internalcolor Color|nil
   ---@return VisualButton
-  function out.VisualButton(width, height, color)
-    local t = VisualButton(0, theight, width, height, color)
+  function out.VisualButton(width, height, color, internalcolor)
+    local t = VisualButton(0, theight, width, height, color, internalcolor)
     add(t)
     return t
   end
@@ -103,10 +106,12 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param fontsize integer
   ---@param align "left"|"center"|"right"
   ---@param mode "normal"|"password"|"multiwrap"|"multinowrap"|nil
+  ---@param internalcolor Color|nil
   ---@return TextInput
-  function out.TextInput(width, height, color, text, fontsize, align, mode)
+  function out.TextInput(width, height, color, text, fontsize, align, mode,
+                         internalcolor)
     local t = TextInput(0, theight, width, height, color, text, fontsize, align,
-                        mode)
+                        mode, internalcolor)
     add(t)
     return t
   end
@@ -117,10 +122,12 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param text string
   ---@param fontsize number
   ---@param align "left"|"center"|"right"
+  ---@param internalcolor Color|nil
   ---@return TextRectangle
-  function out.TextRectangle(width, height, color, text, fontsize, align)
+  function out.TextRectangle(width, height, color, text, fontsize, align,
+                             internalcolor)
     local t = TextRectangle(0, theight, width, height, color, text, fontsize,
-                            align)
+                            align, internalcolor)
     add(t)
     return t
   end
