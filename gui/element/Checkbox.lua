@@ -41,9 +41,22 @@ function Checkbox:initialize(x, y, width, height, color, internalcolor,
     end
   end)
 end
+
 --- Draws the Checkbox
 function Checkbox:draw() self:drawRectangle() end
+
 ---Checks if the checkbox is selected.
 ---@return boolean: true if the checkbox is selected, false otherwise.
 function Checkbox:isSelected() return self.selected end
+
+function Checkbox:select(bool)
+  safety.ensureBoolean(bool, "bool")
+  self.selected = bool
+  if (self.selected) then
+    self.int_color = self.selectedcolor
+  else
+    self.int_color = self.normalcolor
+  end
+end
+
 return Checkbox
