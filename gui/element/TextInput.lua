@@ -101,6 +101,7 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.text = text
   self.font = FontCache:getFont(fontsize)
   self.input = InputField(text, self.mode)
+  self.textcolor = textcolor
   self.input:setFont(self.font)
   self.input:setWidth(self.width - 2 * math.min(self.width / 8, self.height / 8))
   self.input:setHeight(math.floor((self.height - 2 *
@@ -210,6 +211,9 @@ end
 -- Draws the TextInput
 function TextInput:draw()
   if (self.enabled) then
+    local oldmode, oldalphamode = love.graphics.getBlendMode()
+    local r, g, b, a = love.graphics.getColor()
+    love.graphics.setBlendMode("alpha", "premultiplied")
     self:drawRectangle()
     self.upButton:draw()
     self.downButton:draw()
@@ -218,6 +222,7 @@ function TextInput:draw()
     local ox, oy, owidth, oheight = love.graphics.getScissor()
     love.graphics.setScissor()
     local oldCanvas = love.graphics.getCanvas()
+    love.graphics.setBlendMode(oldmode, oldalphamode)
     love.graphics.setCanvas(self.textCanvas)
     love.graphics.clear()
     love.graphics.setColor(0, 0, 1)
@@ -226,18 +231,21 @@ function TextInput:draw()
     end
     local oldFont = love.graphics.getFont()
     love.graphics.setFont(self.font)
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.setColor(self.textcolor:unpack())
     for _, text, x, y in self.input:eachVisibleLine() do
       love.graphics.print(text, x, y)
     end
     love.graphics.setFont(oldFont)
     local x, y, h = self.input:getCursorLayout()
     love.graphics.rectangle("fill", x, y, 1, h)
-
+    local oldmode, oldalphamode = love.graphics.getBlendMode()
+    love.graphics.setColor(r, g, b, a)
     love.graphics.setCanvas(oldCanvas)
+    love.graphics.setBlendMode("alpha", "premultiplied")
     love.graphics.setScissor(ox, oy, owidth, oheight)
     love.graphics.draw(self.textCanvas, self.button.x, self.button.y, 0,
       self.sx or 1, self.sy or 1)
+    love.graphics.setBlendMode(oldmode, oldalphamode)
   end
 end
 
