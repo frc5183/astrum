@@ -5,7 +5,7 @@ local Text = require "lib.gui.mixin.Text"
 local safety = require "lib.safety"
 local Base = require "lib.gui.element.Base"
 ---@class TextRectangle : Base, Rectangle, Text
----@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right", internalcolor:Color|nil):TextRectangle
+---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right", textcolor:Color, internalcolor:Color|nil):TextRectangle
 local TextRectangle = class("TextRectangle", Base)
 TextRectangle:include(Text)
 TextRectangle:include(Rectangle)
@@ -18,9 +18,10 @@ TextRectangle:include(Rectangle)
 ---@param text string
 ---@param fontsize number
 ---@param align "left"|"center"|"right"
+---@param textcolor Color
 ---@param internalcolor Color|nil
 function TextRectangle:initialize(x, y, width, height, color, text, fontsize,
-                                  align, internalcolor)
+                                  align, textcolor, internalcolor)
   safety.ensureNumber(x, "x")
   safety.ensureNumber(y, "y")
   safety.ensureNumberOver(width, 0, "width")
@@ -29,16 +30,19 @@ function TextRectangle:initialize(x, y, width, height, color, text, fontsize,
   safety.ensureString(text, "text")
   safety.ensureIntegerOver(fontsize, 0, "fontsize")
   safety.ensureString(align, "align")
+  safety.ensureColor(textcolor, "textcolor")
   if (internalcolor ~= nil) then
     safety.ensureColor(internalcolor, "internalcolor")
   end
   self:initRectangle(x, y, width, height, color, internalcolor)
-  self:initText(x, y, width, height, text, fontsize, align)
+  self:initText(x, y, width, height, text, fontsize, align, textcolor)
 end
+
 --- Draws the TextRectangle
 function TextRectangle:draw()
   self:drawRectangle()
   self:drawText()
 end
+
 -- Return
 return TextRectangle

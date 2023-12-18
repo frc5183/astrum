@@ -32,7 +32,7 @@ function Asset:getAsset() return assets[self.category][self.id] end
 --- Declassifies the Asset, useful for serialization
 ---@return {category:string, id:string, data:table}
 function Asset:export()
-  return {category = self.category, id = self.id, data = self.data}
+  return { category = self.category, id = self.id, data = self.data }
 end
 
 --- Registers a category within the asset_manager, with strict duplicate checking
@@ -57,7 +57,7 @@ function asset_manager.registerAsset(category, id, asset)
   end
   if (assets[category][id] ~= nil) then
     error("Already Registered Asset within Category (" .. category .. "): " ..
-            id)
+      id)
   end
   if (asset == nil) then
     error(
@@ -77,7 +77,7 @@ function asset_manager.removeAsset(category, id)
   end
   if (assets[category][id] == nil) then
     error("Cannot remove non-existant asset within Category (" .. category ..
-            "): " .. id)
+      "): " .. id)
   end
   assets[category][id] = nil
 end
@@ -94,7 +94,7 @@ function asset_manager.fetchAsset(category, id)
   end
   if (assets[category][id] == nil) then
     error("Cannot fetch non-existant asset within Category (" .. category ..
-            "): " .. id)
+      "): " .. id)
   end
   return Asset(category, id)
 end
@@ -114,7 +114,7 @@ function asset_manager.assembleAsset(category, id, data)
   end
   if (assets[category][id] == nil) then
     error("Cannot fetch non-existant asset within Category (" .. category ..
-            "): " .. id)
+      "): " .. id)
   end
   local out = Asset(category, id)
   out.data = data or {}

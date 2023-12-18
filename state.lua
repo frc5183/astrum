@@ -42,7 +42,7 @@ function state.switch(newState)
   log.info("Switching to a new gamestate with name: " .. name)
   if (not (type(active.switchaway) == "nil")) then
     safety.ensureFunction(active.switchaway,
-                          "active.switchaway: THIS INDICATES THE LAST STATE IS THE PROBLEM. NOT THE ONE THAT IS BEING SWITCHED TO")
+      "active.switchaway: THIS INDICATES THE LAST STATE IS THE PROBLEM. NOT THE ONE THAT IS BEING SWITCHED TO")
     active.switchaway()
   end
   if (not (type(newState.switchto) == "nil")) then

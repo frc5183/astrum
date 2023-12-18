@@ -54,7 +54,9 @@ function Container:initialize(x, y, width, height, color, twidth, theight)
   self.adapter = function(pt, button, presses)
     local x, y = pt.x, pt.y
     if (x < self.x or x > self.x + self.width or y < self.y or y > self.y +
-      self.height) then return math2.Point2D(-1, -1), button, presses end
+          self.height) then
+      return math2.Point2D(-1, -1), button, presses
+    end
     x = x - self.x + self.posx
     y = y - self.y + self.posy
     return math2.Point2D(x, y), button, presses
@@ -62,12 +64,12 @@ function Container:initialize(x, y, width, height, color, twidth, theight)
   self.objects = {}
   if (twidth > width) then
     self.widthbar = ScrollBar(0, height - 20, width, 20, width / twidth,
-                              self.color, false)
+      self.color, false)
     self.widthbar:enable()
   end
   if (theight > height) then
     self.heightbar = ScrollBar(width - 20, 0, 20, height, height / theight,
-                               self.color, true)
+      self.color, true)
     self.heightbar:enable()
   end
 end

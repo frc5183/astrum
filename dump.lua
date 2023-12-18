@@ -31,7 +31,7 @@ local function dump2(o, i, disable_tostr)
     local skip = false
     if o.__index then
       s =
-        s .. string.rep('	', depth) .. '["__index"] = ' .. tostring(o.__index) ..
+          s .. string.rep('	', depth) .. '["__index"] = ' .. tostring(o.__index) ..
           '\n'
     end
     for k, v in pairs(o) do
@@ -45,7 +45,7 @@ local function dump2(o, i, disable_tostr)
         if count == tablelength(o) then u = true end
         if type(k) ~= 'number' then k = '"' .. k .. '"' end
         s = s .. string.rep('	', depth) .. '[' .. k .. '] = ' ..
-              dump2(v, u, tostr) .. '\n'
+            dump2(v, u, tostr) .. '\n'
       end
     end
     depth = depth - 1
@@ -60,7 +60,7 @@ local function dump2(o, i, disable_tostr)
     return l
   end
 end
-local d = {dump2 = dump2, dump = function(...) print(dump2(...)) end}
-local dmt = {__call = d.dump}
+local d = { dump2 = dump2, dump = function(...) print(dump2(...)) end }
+local dmt = { __call = d.dump }
 setmetatable(d, dmt)
 return d

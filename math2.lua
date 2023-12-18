@@ -55,8 +55,8 @@ end
 ---@return string
 Vector2D.__tostring = function(vector)
   return "2D Vector: {X " .. vector.x .. ", Y " .. vector.y ..
-           ", Angle (Radians) " .. vector:getAngle() .. ", MAGNITUDE " ..
-           vector:getMagnitude() .. "}"
+      ", Angle (Radians) " .. vector:getAngle() .. ", MAGNITUDE " ..
+      vector:getMagnitude() .. "}"
 end
 --- Compares 2 LineSegments by comparing their individual components
 ---@param line1 LineSegment
@@ -66,7 +66,7 @@ LineSegment.__eq = function(line1, line2)
   safety.ensureInstanceType(line1, LineSegment, "line1")
   safety.ensureInstanceType(line2, LineSegment, "line2")
   return (line1.pt1 == line2.pt1 and line1.pt2 == line2.pt2) or
-           (line1.pt1 == line2.pt2 and line1.pt2 == line2.pt1)
+      (line1.pt1 == line2.pt2 and line1.pt2 == line2.pt1)
 end
 --- Turns a LineSegment into a string
 ---@param line LineSegment
@@ -74,7 +74,7 @@ end
 LineSegment.__tostring = function(line)
   safety.ensureInstanceType(line, LineSegment, "line")
   return "Line Segment: {pt1 " .. tostring(line.pt1) .. ", pt2, " ..
-           tostring(line.pt2)
+      tostring(line.pt2)
 end
 --- Returns the magnitude of the Vector2D
 ---@return number
@@ -168,10 +168,10 @@ function Point2D:rotate(rotation, centerPoint)
   safety.ensureInstanceType(centerPoint, Point2D, "centerPoint")
   ---@type number
   local newX = ((self.x - centerPoint.x) * math.cos(rotation) -
-                 (self.y - centerPoint.y) * math.sin(rotation)) + centerPoint.x
+    (self.y - centerPoint.y) * math.sin(rotation)) + centerPoint.x
   ---@type number
   local newY = ((self.x - centerPoint.x) * math.sin(rotation) +
-                 (self.y - centerPoint.y) * math.cos(rotation)) + centerPoint.y
+    (self.y - centerPoint.y) * math.cos(rotation)) + centerPoint.y
   return Point2D(newX, newY)
 end
 
@@ -198,7 +198,7 @@ function Point2D:scale(scaleVector, centerPoint)
   local selfVector = self:toVector()
 
   return selfVector:apply(centerVector):multiply(scaleVector):apply(
-           centerPoint:toVector()):toPoint()
+    centerPoint:toVector()):toPoint()
 end
 
 ---@type table

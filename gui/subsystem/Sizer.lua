@@ -36,7 +36,7 @@ function Sizer.init(width, height)
   end
   canvas = love.graphics.newCanvas(width, height)
   scalar = math.min(love.graphics.getWidth() / _width,
-                    love.graphics.getHeight() / _height)
+    love.graphics.getHeight() / _height)
 end
 
 ---Clears and sets the framebuffer
@@ -55,10 +55,10 @@ function Sizer.finish()
   if (active) then
     if (widthLonger) then
       x = (love.graphics.getWidth() - (love.graphics.getHeight() * (factor))) /
-            2
+          2
     else
       y = (love.graphics.getHeight() - (love.graphics.getWidth() / (factor))) /
-            2
+          2
     end
   end
   love.graphics.draw(canvas, x, y, 0, scalar, scalar)

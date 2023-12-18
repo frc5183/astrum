@@ -47,9 +47,9 @@ function rectangle:drawRectangle()
   ---@type love.Canvas
   local oldCanvas = love.graphics.getCanvas()
   ---@type table
-  local oldScissor = {love.graphics.getScissor()}
+  local oldScissor = { love.graphics.getScissor() }
   ---@type table
-  local oldColor = {love.graphics.getColor()}
+  local oldColor = { love.graphics.getColor() }
   ---@type number
   local oldLineWidth = love.graphics.getLineWidth()
   love.graphics.setCanvas(self.rectangleCanvas)
@@ -59,16 +59,16 @@ function rectangle:drawRectangle()
   love.graphics.setColor(self.int_color:unpack())
   love.graphics.setLineWidth(math.min(self.width / 8, self.height / 8))
   love.graphics.rectangle("fill", 0, 0, self.width, self.height,
-                          math.min(self.width / 8, self.height / 8),
-                          math.min(self.width / 8, self.height / 8))
+    math.min(self.width / 8, self.height / 8),
+    math.min(self.width / 8, self.height / 8))
   love.graphics.setColor(self.color:unpack())
   love.graphics.rectangle("line", math.min(self.width / 8, self.height / 8) / 2,
-                          math.min(self.width / 8, self.height / 8) / 2,
-                          self.width - math.min(self.width / 8, self.height / 8),
-                          self.height -
-                            math.min(self.width / 8, self.height / 8),
-                          math.min(self.width / 8, self.height / 8) * 0.45,
-                          math.min(self.width / 8, self.height / 8) * 0.45)
+    math.min(self.width / 8, self.height / 8) / 2,
+    self.width - math.min(self.width / 8, self.height / 8),
+    self.height -
+    math.min(self.width / 8, self.height / 8),
+    math.min(self.width / 8, self.height / 8) * 0.45,
+    math.min(self.width / 8, self.height / 8) * 0.45)
 
   love.graphics.setLineWidth(oldLineWidth)
   love.graphics.setCanvas(oldCanvas)
@@ -77,7 +77,7 @@ function rectangle:drawRectangle()
   love.graphics.translate(self.x + (self.width / 2), self.y + (self.height / 2))
   love.graphics.scale(self.sx, self.sy)
   love.graphics
-    .draw(self.rectangleCanvas, -(self.width / 2), -(self.height / 2))
+      .draw(self.rectangleCanvas, -(self.width / 2), -(self.height / 2))
   love.graphics.pop()
 end
 

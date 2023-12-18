@@ -73,7 +73,7 @@ end
 function button:contains(point)
   safety.ensurePoint2D(point, "point")
   return point.x >= self.x and point.x <= self.x + self.width and point.y >=
-           self.y and point.y <= self.y + self.height
+      self.y and point.y <= self.y + self.height
 end
 
 --- Triggers all click callbacks

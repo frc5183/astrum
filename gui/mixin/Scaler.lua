@@ -41,8 +41,8 @@ function Scaler:updateScaler(dt, pt)
   ---@type number
   local y = pt.y
   if (x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y +
-    self.height) then
-    self.tween = flux.to(self, 0.5, {sx = 1.2, sy = 1.2})
+        self.height) then
+    self.tween = flux.to(self, 0.5, { sx = 1.2, sy = 1.2 })
   elseif self.tween then
     self.tween:stop()
     self.tween = nil
