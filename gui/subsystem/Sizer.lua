@@ -34,8 +34,8 @@ function Sizer.init(width, height)
     widthLonger = false
     factor = (height / width)
   else
-    active=false
-    factor=1
+    active = false
+    factor = 1
   end
   canvas = love.graphics.newCanvas(width, height)
   scalar = math.min(love.graphics.getWidth() / _width,
@@ -76,10 +76,12 @@ function Sizer.translate(x, y)
   local _x = 0
   ---@type integer
   local _y = 0
-  if (widthLonger) then
-    _x = (love.graphics.getWidth() - (love.graphics.getHeight() * (factor))) / 2
-  else
-    _y = (love.graphics.getHeight() - (love.graphics.getWidth() / (factor))) / 2
+  if (active) then
+    if (widthLonger) then
+      _x = (love.graphics.getWidth() - (love.graphics.getHeight() * (factor))) / 2
+    else
+      _y = (love.graphics.getHeight() - (love.graphics.getWidth() * (factor))) / 2
+    end
   end
   return (x - _x) / scalar, (y - _y) / scalar
 end
