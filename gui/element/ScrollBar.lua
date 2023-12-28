@@ -116,7 +116,10 @@ end
 --- Draws the ScrollBar
 function ScrollBar:draw()
   if self.enabled == true then
+    local oldmode, oldalphamode = love.graphics.getBlendMode()
+    love.graphics.setBlendMode("alpha", "premultiplied")
     love.graphics.draw(self.canvas, self.x, self.y)
+    love.graphics.setBlendMode(oldmode, oldalphamode)
     self.button:draw()
   end
 end

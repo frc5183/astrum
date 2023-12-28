@@ -76,9 +76,12 @@ function rectangle:drawRectangle()
   love.graphics.push()
   love.graphics.translate(self.x + (self.width / 2), self.y + (self.height / 2))
   love.graphics.scale(self.sx, self.sy)
+  local oldmode, oldalphamode = love.graphics.getBlendMode()
+  love.graphics.setBlendMode("alpha", "premultiplied")
   love.graphics
       .draw(self.rectangleCanvas, -(self.width / 2), -(self.height / 2))
-  love.graphics.pop()
+  love.graphics.setBlendMode(oldmode, oldalphamode)
+      love.graphics.pop()
 end
 
 -- Return

@@ -73,19 +73,54 @@ function Container:initialize(x, y, width, height, color, twidth, theight)
     self.heightbar:enable()
   end
 end
-
+--- Expands the internal canvas by a certain amount
+---@param tx integer
+---@param ty integer
+function Container:expand(tx, ty)
+  safety.ensureIntegerOver(tx, -1, "tx")
+  safety.ensureIntegerOver(ty, -1, "ty")
+  assert(tx >= 0 or ty >= 0, "tx or ty must be positive")
+  
+  self.twidth = self.twidth+tx
+  self.theight = self.theight+ty
+  self.canvas:release()
+  self.canvas = love.graphics.newCanvas(self.twidth, self.theight)
+  self.adapter = function(pt, button, presses)
+    local x, y = pt.x, pt.y
+    if (x < self.x or x > self.x + self.width or y < self.y or y > self.y +
+          self.height) then
+      return math2.Point2D(-1, -1), button, presses
+    end
+    x = x - self.x + self.posx
+    y = y - self.y + self.posy
+    return math2.Point2D(x, y), button, presses
+  end
+  if (self.twidth > self.width) then
+    self.widthbar = ScrollBar(0, self.height - 20, self.width, 20, self.width / self.twidth,
+      self.color, false)
+    self.widthbar:enable()
+  end
+  if (self.theight > self.height) then
+    self.heightbar = ScrollBar(self.width - 20, 0, 20, self.height, self.height / self.theight,
+      self.color, true)
+    self.heightbar:enable()
+  end
+end
 function Container:draw()
   local oldCanvas = love.graphics.getCanvas()
   love.graphics.setCanvas(self.canvas)
-  love.graphics.clear()
   local ox, oy, owidth, oheight = love.graphics.getScissor()
-  love.graphics.setScissor(self.posx, self.posy, self.width, self.height)
+  love.graphics.setScissor()
+  love.graphics.clear()
   ---@param k integer
   ---@param v Base
   for k, v in pairs(self.objects) do v:draw() end
   love.graphics.setCanvas(oldCanvas)
   love.graphics.setScissor(ox, oy, owidth, oheight)
+  local oldmode, oldalphamode = love.graphics.getBlendMode()
+  love.graphics.setBlendMode("alpha", "premultiplied")
   love.graphics.draw(self.canvas, self.x - self.posx, self.y - self.posy)
+  love.graphics.setBlendMode(oldmode, oldalphamode)
   if self.widthbar then self.widthbar:draw() end
   if self.heightbar then self.heightbar:draw() end
 end
