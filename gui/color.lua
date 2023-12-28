@@ -16,7 +16,7 @@ Color.__eq = function(color1, color2)
   safety.ensureInstanceType(color1, Color, "color1")
   safety.ensureInstanceType(color2, Color, "color2")
   return
-      color1.r == color2.r and color1.g == color2.g and color1.b == color2.b and
+    color1.r == color2.r and color1.g == color2.g and color1.b == color2.b and
       color1.a == color2.a
 end
 --- Converts the color into a string that contains all rgba values
@@ -24,7 +24,7 @@ end
 ---@return string
 Color.__tostring = function(color)
   return "Color: {" .. color.r .. ", " .. color.g .. ", " .. color.b .. ", " ..
-      color.a .. "}"
+           color.a .. "}"
 end
 --- A color for Love2D, convienently in Class form
 -- @param r number

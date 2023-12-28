@@ -46,18 +46,18 @@ function Text:initText(x, y, width, height, text, fontsize, align, color)
   ---@diagnostic disable-next-line: undefined-field
   self.text = love.graphics.newTextBatch(self.font)
   self.textCanvas = love.graphics.newCanvas(self.width - 2 *
-    math.min(self.width / 8,
-      self.height / 8),
-    math.floor(
-      (self.height -
-        (2 *
-          math.min(self.width / 8,
-            self.height / 8))) /
-      self.font:getHeight()) *
-    self.font:getHeight())
+                                              math.min(self.width / 8,
+                                                       self.height / 8),
+                                            math.floor(
+                                              (self.height -
+                                                (2 *
+                                                  math.min(self.width / 8,
+                                                           self.height / 8))) /
+                                                self.font:getHeight()) *
+                                              self.font:getHeight())
   self.text:setf(text,
-    self.width - 2 * math.min(self.width / 8, self.height / 8),
-    self.align)
+                 self.width - 2 * math.min(self.width / 8, self.height / 8),
+                 self.align)
   self._text = text
   self.sx = self.sx or 1
   self.sy = self.sy or 1
@@ -82,9 +82,9 @@ function Text:drawText()
   love.graphics.translate(self.x + (self.width / 2), self.y + (self.height / 2))
   love.graphics.scale(self.sx, self.sy)
   love.graphics.draw(self.textCanvas, -(self.width / 2 -
-      math.min(self.width / 8, self.height / 8)),
-    -(self.height / 2 -
-      math.min(self.width / 8, self.height / 8)))
+                       math.min(self.width / 8, self.height / 8)),
+                     -(self.height / 2 -
+                       math.min(self.width / 8, self.height / 8)))
   love.graphics.setBlendMode(oldmode, oldalphamode)
   love.graphics.pop()
 end
@@ -95,7 +95,7 @@ function Text:changeText(text)
   safety.ensureString(text)
   self._text = text
   self.text:setf(text, self.width - math.min(self.width / 8, self.height / 8),
-    self.align)
+                 self.align)
 end
 
 --- Gets the text

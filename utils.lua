@@ -19,13 +19,13 @@ function utils.onClickSwitch(button, func, state_container)
   end
   button:onClick(function(pt, button_id, presses)
     if (button:contains(pt) and button_id == 1) then -- if button 1 clicked within button's bounds
-      wait(0.05,                                     -- Wait to prevent double clicking and rubberband hell
-        function()
-          if (func) then                             -- Allow user to call code before the switch, perhaps to reload the state
-            func(state_container)
-          end
-          state.switch(state_container.state) -- switch to new state
-        end)
+      wait(0.05, -- Wait to prevent double clicking and rubberband hell
+      function()
+        if (func) then -- Allow user to call code before the switch, perhaps to reload the state
+          func(state_container)
+        end
+        state.switch(state_container.state) -- switch to new state
+      end)
     end
   end)
 end

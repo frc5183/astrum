@@ -12,7 +12,7 @@ setmetatable(wait, {
   __call = function(self, seconds, func, ...)
     safety.ensureNumber(seconds, "seconds")
     if type(func) ~= "nil" then safety.ensureFunction(func, "func") end
-    table.insert(active, { love.timer.getTime() + seconds, func, { ... } })
+    table.insert(active, {love.timer.getTime() + seconds, func, {...}})
   end
 })
 -- Called every single frame-update in love.update

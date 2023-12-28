@@ -10,5 +10,5 @@ return {
   Sizer = require "lib.gui.subsystem.Sizer",
   TextRectangle = require "lib.gui.element.TextRectangle",
   Container = require "lib.gui.element.Container",
-  Checkbox = require "lib.gui.element.Checkbox",
+  Checkbox = require "lib.gui.element.Checkbox"
 }

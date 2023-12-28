@@ -74,7 +74,7 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   if (mode ~= nil) then
     safety.ensureString(mode, "mode")
     if (mode ~= "normal" and mode ~= "password" and mode ~= "multiwrap" and mode ~=
-          "multinowrap") then
+      "multinowrap") then
       error(
         "Mode must be a vlue of either: normal, password, multiwrap, or multinowrap. It also may optionally be omited, in which the default value of multiwrap will apply")
     end
@@ -105,34 +105,34 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.input:setFont(self.font)
   self.input:setWidth(self.width - 2 * math.min(self.width / 8, self.height / 8))
   self.input:setHeight(math.floor((self.height - 2 *
-        math.min(self.width / 8, self.height / 8)) /
-      self.font:getHeight()) *
-    self.font:getHeight())
+                                    math.min(self.width / 8, self.height / 8)) /
+                                    self.font:getHeight()) *
+                         self.font:getHeight())
   self.textCanvas = love.graphics.newCanvas(self.width - 2 *
-    math.min(self.width / 8,
-      self.height / 8),
-    math.floor(
-      (self.height - 2 *
-        math.min(self.width / 8,
-          self.height / 8)) /
-      self.font:getHeight()) *
-    self.font:getHeight())
+                                              math.min(self.width / 8,
+                                                       self.height / 8),
+                                            math.floor(
+                                              (self.height - 2 *
+                                                math.min(self.width / 8,
+                                                         self.height / 8)) /
+                                                self.font:getHeight()) *
+                                              self.font:getHeight())
   self.button = AdapterButton(
-    self.x + math.min(self.width / 8, self.height / 8),
-    self.y + math.min(self.width / 8, self.height / 8),
-    self.width - 2 * math.min(self.width / 8, self.height / 8),
-    math.floor(
-      (self.height - 2 * math.min(self.width / 8, self.height / 8)) /
-      self.font:getHeight()) * self.font:getHeight())
+                  self.x + math.min(self.width / 8, self.height / 8),
+                  self.y + math.min(self.width / 8, self.height / 8),
+                  self.width - 2 * math.min(self.width / 8, self.height / 8),
+                  math.floor(
+                    (self.height - 2 * math.min(self.width / 8, self.height / 8)) /
+                      self.font:getHeight()) * self.font:getHeight())
   self.buttonPressFunc = (function(pt, button, presses)
     if self.button:contains(pt) then
       if (love.system.getOS() == "Android" or love.system.getOS() == "iOS") then
         love.keyboard.setTextInput(true, self.button.x, self.button.y,
-          self.button.width, self.button.height)
+                                   self.button.width, self.button.height)
       end
       ActiveText = self
       self.input:mousepressed(pt.x - self.button.x, pt.y - self.button.y,
-        button, presses)
+                              button, presses)
     else
       self.input:releaseMouse()
     end
@@ -140,7 +140,7 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   self.buttonReleaseFunc = (function(pt, button, presses)
     if self.button:contains(pt) then
       self.input:mousereleased(pt.x - self.button.x, pt.y - self.button.y,
-        button, presses)
+                               button, presses)
     else
       self.input:releaseMouse()
     end
@@ -162,22 +162,22 @@ function TextInput:initialize(x, y, width, height, color, text, fontsize, align,
   local min8 = math.min(self.width / 8, self.height / 8)
 
   self.upButton = VisualButton(self.x + min8, self.y, self.width - (2 * min8),
-    min8, Color(color.r * 0.5, color.g * 0.5,
-      color.b * 0.5, color.a))
+                               min8, Color(color.r * 0.5, color.g * 0.5,
+                                           color.b * 0.5, color.a))
   self.downButton = VisualButton(self.x + min8, self.y + self.height - (min8),
-    self.width - (2 * min8), min8, Color(
-      color.r * 0.5, color.g * 0.5, color.b * 0.5,
-      color.a))
+                                 self.width - (2 * min8), min8, Color(
+                                   color.r * 0.5, color.g * 0.5, color.b * 0.5,
+                                   color.a))
   self.leftButton = VisualButton(self.x, self.y + min8, min8,
-    self.height - (2 * min8), Color(color.r * 0.5,
-      color.g * 0.5,
-      color.b * 0.5,
-      color.a))
+                                 self.height - (2 * min8), Color(color.r * 0.5,
+                                                                 color.g * 0.5,
+                                                                 color.b * 0.5,
+                                                                 color.a))
   self.rightButton = VisualButton(self.x + self.width - (min8), y + min8, min8,
-    self.height - (2 * min8), Color(color.r * 0.5,
-      color.g * 0.5,
-      color.b * 0.5,
-      color.a))
+                                  self.height - (2 * min8), Color(color.r * 0.5,
+                                                                  color.g * 0.5,
+                                                                  color.b * 0.5,
+                                                                  color.a))
 
   self.enabled = false
 end
@@ -244,7 +244,7 @@ function TextInput:draw()
     love.graphics.setBlendMode("alpha", "premultiplied")
     love.graphics.setScissor(ox, oy, owidth, oheight)
     love.graphics.draw(self.textCanvas, self.button.x, self.button.y, 0,
-      self.sx or 1, self.sy or 1)
+                       self.sx or 1, self.sy or 1)
     love.graphics.setBlendMode(oldmode, oldalphamode)
   end
 end
@@ -269,7 +269,7 @@ end
 function TextInput:wheelmoved(dx, dy, x, y)
   local go = true
   if (love.system.getOS() == "Windows" or love.system.getOS() == "Linux" or
-        love.system.getOS() == "OS X") then
+    love.system.getOS() == "OS X") then
     x = x or -1
     y = y or -1
     go = self.button:contains(math2.Point2D(x, y))
@@ -344,7 +344,7 @@ function TextInput.pre() clear = true end
 --- To be run after ClickOrigin:onPress()
 function TextInput.post()
   if (clear and
-        (love.system.getOS() == "Android" or love.system.getOS() == "iOS")) then
+    (love.system.getOS() == "Android" or love.system.getOS() == "iOS")) then
     love.keyboard.setTextInput(false)
   end
   if (clear) then ActiveText = nil end

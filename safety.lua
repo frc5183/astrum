@@ -15,8 +15,8 @@ function safety.ensureString(val, name)
   else
     ---@type string
     local str = "Value (" .. name ..
-        ") expected to be of type string. Found type " .. type(val) ..
-        "."
+                  ") expected to be of type string. Found type " .. type(val) ..
+                  "."
     error(str)
   end
 end
@@ -38,7 +38,7 @@ function safety.ensureLuaType(val, ltype, name)
   else
     ---@type string
     local str = "Value (" .. name .. ") expected to be of type " .. ltype ..
-        ". Found type " .. type(val) .. "."
+                  ". Found type " .. type(val) .. "."
     error(str)
   end
 end
@@ -103,7 +103,7 @@ function safety.ensureIntegerOver(val, lim, name)
   safety.ensureNumber(lim, "lim")
   if (val <= lim) then
     error(name .. " must be an integer value greater than " .. lim ..
-      ". Value of (" .. val .. ") does not match.")
+            ". Value of (" .. val .. ") does not match.")
   end
 end
 
@@ -116,7 +116,7 @@ function safety.ensureNumberOver(val, lim, name)
   safety.ensureNumber(lim, "lim")
   if (val <= lim) then
     error(name .. " must be a number value greater than " .. lim ..
-      ". Value of (" .. val .. ") does not match.")
+            ". Value of (" .. val .. ") does not match.")
   end
 end
 
@@ -147,7 +147,7 @@ function safety.ensureInstanceType(val, class, name)
   end
 
   local valtype =
-  "\"Not a proper class. Could be a corrupt class or could be just a normal table\""
+    "\"Not a proper class. Could be a corrupt class or could be just a normal table\""
   if type(val.class) == "table" and type(val.class.name) == "string" then
     valtype = val.class.name
   end
@@ -155,7 +155,7 @@ function safety.ensureInstanceType(val, class, name)
     valtype = val.super.name
   end
   local str = "Value (" .. name .. ") expected to be of Class type " .. cname ..
-      ". Found class/superclass " .. valtype .. "."
+                ". Found class/superclass " .. valtype .. "."
   error(str)
 end
 

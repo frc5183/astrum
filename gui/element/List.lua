@@ -55,10 +55,10 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param textcolor Color
   ---@param internalcolor Color|nil
   ---@return TextButton
-  function out.TextButton(width, height, color, text, fontsize, align, textcolor,
-                          internalcolor)
+  function out.TextButton(width, height, color, text, fontsize, align,
+                          textcolor, internalcolor)
     local t = TextButton(0, theight, width, height, color, text, fontsize,
-      align, textcolor, internalcolor)
+                         align, textcolor, internalcolor)
     add(t)
     return t
   end
@@ -82,7 +82,7 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@return ScrollBar
   function out.ScrollBar(width, height, percentage, color, isVertical)
     local t =
-        ScrollBar(0, theight, width, height, percentage, color, isVertical)
+      ScrollBar(0, theight, width, height, percentage, color, isVertical)
     add(t)
     return t
   end
@@ -109,10 +109,10 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param textcolor Color
   ---@param internalcolor Color|nil
   ---@return TextInput
-  function out.TextInput(width, height, color, text, fontsize, align, mode, textcolor,
-                         internalcolor)
+  function out.TextInput(width, height, color, text, fontsize, align, mode,
+                         textcolor, internalcolor)
     local t = TextInput(0, theight, width, height, color, text, fontsize, align,
-      mode, textcolor, internalcolor)
+                        mode, textcolor, internalcolor)
     add(t)
     return t
   end
@@ -126,10 +126,10 @@ return function(minimum, x, y, width, height, color, spacing)
   ---@param internalcolor Color|nil
   ---@param textcolor Color
   ---@return TextRectangle
-  function out.TextRectangle(width, height, color, text, fontsize, align, textcolor,
-                             internalcolor)
+  function out.TextRectangle(width, height, color, text, fontsize, align,
+                             textcolor, internalcolor)
     local t = TextRectangle(0, theight, width, height, color, text, fontsize,
-      align, textcolor, internalcolor)
+                            align, textcolor, internalcolor)
     add(t)
     return t
   end
@@ -141,8 +141,8 @@ return function(minimum, x, y, width, height, color, spacing)
     end
     ---@type Container
     local container = Container(x, y, width, height, color,
-      math.max(twidth + 20, width),
-      math.max(theight + 20, height))
+                                math.max(twidth + 20, width),
+                                math.max(theight + 20, height))
     ---@param k integer
     ---@param v Base
     for k, v in ipairs(objects) do container:add(v) end
