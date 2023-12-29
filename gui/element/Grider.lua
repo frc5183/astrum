@@ -290,7 +290,6 @@ function Grider:TextRectangle(xwidth, yheight, color, text, fontsize, align,
   safety.ensureIntegerOver(xwidth, 0, "xwidth")
   safety.ensureIntegerOver(yheight, 0, "yheight")
   local ox, oy = self:ClearRoom(xwidth, yheight)
-  print(ox, oy)
   local owidth = (self.tilewidth + self.xspacing) * xwidth - self.xspacing
   local oheight = (self.tileheight + self.yspacing) * yheight - self.yspacing
   local t = TextRectangle(((self.tilewidth + self.xspacing) * (ox - 1)),
