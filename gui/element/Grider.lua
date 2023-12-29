@@ -52,7 +52,7 @@ function Grider:initialize(x, y, tilewidth, tileheight, xspacing, yspacing,
   self.yspacing = yspacing
   self.color = color
   self.extendmode = extendmode
-  if extendmode == alternate then self.aextendmode = "down" end
+  if extendmode == "alternate" then self.aextendmode = "down" end
   self.twidth = twidth
   self.theight = theight
 end
