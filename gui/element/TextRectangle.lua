@@ -1,8 +1,13 @@
 -- Imports
+---@module 'lib.external.class'
 local class = require "lib.external.class"
+---@module 'lib.gui.mixin.RoundRectangle'
 local Rectangle = require "lib.gui.mixin.RoundRectangle"
+---@module 'lib.gui.mixin.Text'
 local Text = require "lib.gui.mixin.Text"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.gui.element.Base'
 local Base = require "lib.gui.element.Base"
 ---@class TextRectangle : Base, Rectangle, Text
 ---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right", textcolor:Color, internalcolor:Color|nil):TextRectangle

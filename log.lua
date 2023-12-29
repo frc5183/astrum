@@ -1,4 +1,5 @@
 --- Imports
+---@module 'lib.safety'
 local safety = require "lib.safety"
 ---@type table
 local log = {}

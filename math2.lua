@@ -1,5 +1,7 @@
 --- Imports
+---@module 'lib.external.class'
 local Class = require("lib.external.class")
+---@module 'lib.safety'
 local safety = require("lib.safety")
 local math = math
 ---@class Point2D

@@ -1,9 +1,15 @@
 -- Imports
+---@module 'lib.external.class'
 local class = require "lib.external.class"
+---@module 'lib.gui.element.VisualButton'
 local VisualButton = require "lib.gui.element.VisualButton"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.gui.color'
 local Color = require "lib.gui.color"
+---@module 'lib.math2'
 local math2 = require "lib.math2"
+---@module 'lib.gui.element.Base'
 local Base = require "lib.gui.element.Base"
 ---@class ScrollBar : Base
 ---@field canvas love.Canvas

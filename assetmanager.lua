@@ -1,9 +1,11 @@
 -- Imports
+---@module 'lib.safety'
 local safety = require "lib.safety"
 ---@type table
 local assets = {}
 ---@type table
 local asset_manager = {}
+---@module 'lib.external.class'
 local class = require "lib.external.class"
 ---@class Asset
 ---@field category string

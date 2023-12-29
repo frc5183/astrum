@@ -1,6 +1,10 @@
+---@module 'lib.gui'
 local gui = require "lib.gui"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.wait'
 local wait = require "lib.wait"
+---@module 'lib.state'
 local state = require "lib.state"
 local utils = {}
 ---A skeleton for creating repetative switch functions

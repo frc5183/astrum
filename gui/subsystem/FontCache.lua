@@ -1,5 +1,6 @@
 -- Imports
 local fontCache = {}
+---@module 'lib.safety'
 local safety = require "lib.safety"
 --- Returns a cached font, or if unavailable, creates the font and adds it to the cache.
 --- Used to prevent overuse of font creation

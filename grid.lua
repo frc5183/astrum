@@ -1,4 +1,6 @@
+---@module 'lib.external.class'
 local class = require "lib.external.class"
+---@module 'lib.safety'
 local safety = require "lib.safety"
 ---@class Grid
 local Grid = class("Grid")

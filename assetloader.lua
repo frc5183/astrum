@@ -1,6 +1,8 @@
 -- Imports
 local AssetLoader = {}
+---@module 'lib.log'
 local log = require "lib.log"
+---@module 'lib.assetmanager'
 local AssetManager = require "lib.assetmanager"
 local channel = love.thread.getChannel("assets")
 ---Need because for some god forsaken reason it doesn't recognize this variant.

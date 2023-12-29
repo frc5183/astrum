@@ -1,12 +1,21 @@
 -- Imports
+---@module 'lib.gui.element.Container'
 local Container = require "lib.gui.element.Container"
+---@module 'lib.gui.element.Base'
 local Base = require "lib.gui.element.Base"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.gui.color'
 local Color = require "lib.gui.color"
+---@module 'lib.gui.element.TextButton'
 local TextButton = require "lib.gui.element.TextButton"
+---@module 'lib.gui.element.TextInput'
 local TextInput = require "lib.gui.element.TextInput"
+---@module 'lib.gui.element.ScrollBar'
 local ScrollBar = require "lib.gui.element.ScrollBar"
+---@module 'lib.gui.element.VisualButton'
 local VisualButton = require "lib.gui.element.VisualButton"
+---@module 'lib.gui.element.TextRectangle'
 local TextRectangle = require "lib.gui.element.TextRectangle"
 -- Assembler
 ---@param minimum integer the amount on the top of the List that will be left blank

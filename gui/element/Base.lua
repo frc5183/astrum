@@ -1,5 +1,7 @@
 -- Imports
+---@module 'lib.external.class'
 local class = require "lib.external.class"
+---@module 'lib.math2'
 local math2 = require "lib.math2"
 ---@class Base
 ---@field include fun(self:Base, mixin:any)

@@ -1,5 +1,7 @@
 -- Imports
+---@module 'lib.external.class'
 local class = require "lib.external.class"
+---@module 'lib.gui.mixin.Base'
 local Base = require "lib.gui.element.Base"
 ---@class Container : Base
 ---@field x number
@@ -16,9 +18,13 @@ local Base = require "lib.gui.element.Base"
 ---@field widthbar ScrollBar
 ---@field heightbar ScrollBar
 local Container = class("Container", Base)
+---@module 'lib.gui.element.ScrollBar'
 local ScrollBar = require "lib.gui.element.ScrollBar"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.math2'
 local math2 = require "lib.math2"
+---@module 'lib.gui.color'
 local color = require "lib.gui.color"
 --- A Container holds and scrolls other Base objects, including other Containers
 --- If twidth or theight are larger than their counterparts, it allows the Container to scroll in that direction and adds a Scrollbar accordingly.

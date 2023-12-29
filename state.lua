@@ -1,5 +1,7 @@
 -- Imports
+---@module 'lib.log'
 local log = require "lib.log"
+---@module 'lib.safety'
 local safety = require "lib.safety"
 local state = {}
 ---@class State

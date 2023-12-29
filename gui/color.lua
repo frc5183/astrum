@@ -1,4 +1,5 @@
 -- Imports
+---@module 'lib.external.class'
 local Class = require "lib.external.class"
 ---@class Color
 ---@field r number
@@ -7,6 +8,7 @@ local Class = require "lib.external.class"
 ---@field a number
 ---@overload fun(r:number, g:number, b:number, a:number):Color
 local Color = Class("Color")
+---@module 'lib.safety'
 local safety = require("lib.safety")
 --- Tests if two colors are equal
 ---@param color1 Color

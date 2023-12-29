@@ -9,6 +9,7 @@
 ---@field _callbacks_click table
 ---@field _callbacks_press table
 local button = {}
+---@module 'lib.safety'
 local safety = require "lib.safety"
 --- Internal Init function for buttons
 ---@param x number

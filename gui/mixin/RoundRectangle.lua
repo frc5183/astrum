@@ -10,8 +10,11 @@
 ---@field color Color
 ---@field int_color Color
 local rectangle = {}
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.external.flux'
 local flux = require "lib.external.flux"
+---@module 'lib.gui.color'
 local Color = require "lib.gui.color"
 --- Rectangle is an easy to use dynamic Drawable
 -- @param x the x positon

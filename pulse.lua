@@ -1,9 +1,11 @@
+---@module 'lib.external.class'
 local class = require "lib.external.class"
 ---@class Pulse
 ---@field private _events table
 ---@field private _cache table
 ---@overload fun(events:table):Pulse
 local Pulse = class("Pulse")
+---@module 'lib.safety'
 local safety = require "lib.safety"
 --- A Pulse is an event emitter class. Instances can be used to construct complex callback-based programming
 ---@param events table|nil

@@ -13,8 +13,11 @@
 ---@field sy number
 ---@field text love.Text
 local Text = {}
+---@module 'lib.gui.subsystem.FontCache'
 local FontCache = require "lib.gui.subsystem.FontCache"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.gui.color'
 local Color = require "lib.gui.color"
 --- Text initializing function
 ---@param x number

@@ -1,4 +1,5 @@
 -- Imports
+---@module 'lib.math2'
 local math2 = require "lib.math2"
 
 ---@class Scaler
@@ -10,7 +11,9 @@ local math2 = require "lib.math2"
 ---@field width number
 ---@field height number
 local Scaler = {}
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.external.flux'
 local flux = require "lib.external.flux"
 --- The initializng Scaler
 ---@param x number

@@ -1,7 +1,11 @@
 -- Imports
+---@module 'lib.external.class'
 local class = require "lib.external.class"
+---@module 'lib.gui.mixin.Button'
 local Button = require "lib.gui.mixin.Button"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.gui.element.Base'
 local Base = require "lib.gui.element.Base"
 ---@class AdapterButton : Base, Button
 ---@overload fun(x:number, y:number, width:number, height:number):AdapterButton

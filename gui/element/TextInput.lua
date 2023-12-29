@@ -1,9 +1,15 @@
 -- Import
+---@module 'lib.external.class'
 local class = require "lib.external.class"
+---@module 'lib.gui.color'
 local Color = require "lib.gui.color"
+---@module 'lib.gui.mixin.RoundRectangle'
 local Rectangle = require "lib.gui.mixin.RoundRectangle"
+---@module 'lib.safety'
 local safety = require "lib.safety"
+---@module 'lib.external.InputField'
 local InputField = require "lib.external.InputField"
+---@module 'lib.gui.element.Base'
 local Base = require "lib.gui.element.Base"
 ---@class TextInput: Base, Rectangle
 ---@overload fun(x:number, y:number, width:integer, height:integer, color:Color, text:string, fontsize:number, align:"left"|"center"|"right", mode:"normal"|"password"|"multiwrap"|"multinowrap", textcolor:Color, internalcolor:Color|nil):TextInput
@@ -36,9 +42,13 @@ local Base = require "lib.gui.element.Base"
 ---@field leftButton VisualButton
 ---@field rightButton VisualButton
 local TextInput = class("TextInput", Base)
+---@module 'lib.gui.subsystem.FontCache'
 local FontCache = require "lib.gui.subsystem.FontCache"
+---@module 'lib.math2'
 local math2 = require "lib.math2"
+---@module 'lib.gui.element.AdapterButton'
 local AdapterButton = require "lib.gui.element.AdapterButton"
+---@module 'lib.gui.element.VisualButton'
 local VisualButton = require "lib.gui.element.VisualButton"
 local ActiveText
 ---@type boolean
