@@ -24,7 +24,16 @@ local Checkbox = require "lib.gui.element.Checkbox"
 local ScrollBar = require "lib.gui.element.ScrollBar"
 ---@module 'lib.external.class'
 local class = require "lib.external.class"
-
+---@module 'lib.gui.element.AdapterImage'
+local AdapterImage = require "lib.gui.element.AdapterImage"
+---@module 'lib.gui.element.BatchedImage'
+local BatchedImage = require "lib.gui.element.BatchedImage"
+---@module 'lib.gui.element.ImageButton'
+local ImageButton = require "lib.gui.element.ImageButton"
+---@module 'lib.gui.element.BatchedImageButton'
+local BatchedImageButton = require "lib.gui.element.BatchedImageButton"
+---@module 'lib.gui.element.Batcher'
+local Batcher = require "lib.gui.element.Batcher"
 ---@class Grider
 ---@overload fun(x:integer, y:integer, tilewidth:integer, tileheight:integer, xspacing:integer, yspacing:integer, gridwidth:integer, gridheight:integer, color:Color, extendmode:"down"|"right"|"error"|"alternate", twidth:integer, theight:integer):Grider
 local Grider = class("Grider")
@@ -194,6 +203,227 @@ function Grider:Checkbox(xwidth, yheight, color, internalcolor, selectedcolor)
   for x = ox, ox + xwidth - 1 do
     for y = oy, oy + yheight - 1 do self.grid:set(x, y, t) end
   end
+  self.container:add(t)
+  return t
+end
+--- Creates an AdapterImage in the grid
+---@param xwidth integer
+---@param yheight integer
+---@param image love.Image
+---@param mode "normal"|"scale"|"fill"|nil
+---@param quad love.Quad|nil
+---@param sx number|nil
+---@param sy number|nil
+---@return AdapterImage
+function Grider:AdapterImage(xwidth, yheight, image, mode, quad, sx, sy)
+  safety.ensureIntegerOver(xwidth, 0, "xwidth")
+  safety.ensureIntegerOver(yheight, 0, "yheight")
+  safety.ensureUserdata(image, "image")
+  if (mode == nil) then mode = "normal" end
+  safety.ensureString(mode, "mode")
+  assert(mode == "normal" or mode == "scale" or mode == "fill",
+         "You must include a valid mode: normal, scale, fill, none")
+  if (quad ~= nil) then safety.ensureUserdata(quad, "quad") end
+  if (sx ~= nil) then safety.ensureNumber(sx, "sx") end
+  if (sy ~= nil) then safety.ensureNumber(sy, "sy") end
+  local width, height
+  if (quad) then
+    local _, _, w, h = quad:getViewport()
+    width, height = w, h
+  else
+    width, height = image:getDimensions()
+  end
+  local owidth = (self.tilewidth + self.xspacing) * xwidth - self.xspacing
+  local oheight = (self.tileheight + self.yspacing) * yheight - self.yspacing
+  if (mode == "scale") then
+    local rX = owidth / width
+    local rY = oheight / height
+    if (rX > rY) then
+      sx = rY
+      sy = rY
+    else
+      sx = rX
+      sy = rX
+    end
+  elseif (mode == "fill") then
+    sx = owidth / width
+    sy = oheight / height
+  end
+  local ox, oy = self:ClearRoom(xwidth, yheight)
+  local t = AdapterImage(((self.tilewidth + self.xspacing) * (ox - 1)),
+                         ((self.tileheight + self.yspacing) * (oy - 1)), image,
+                         quad, sx, sy)
+  for x = ox, ox + xwidth - 1 do
+    for y = oy, oy + yheight - 1 do self.grid:set(x, y, t) end
+  end
+  self.container:add(t)
+  return t
+end
+--- Creates an ImageButton in the grid
+---@param xwidth integer
+---@param yheight integer
+---@param image love.Image
+---@param mode "normal"|"scale"|"fill"|nil
+---@param quad love.Quad|nil
+---@param sx number|nil
+---@param sy number|nil
+---@return ImageButton
+function Grider:ImageButton(xwidth, yheight, image, mode, quad, sx, sy)
+  safety.ensureIntegerOver(xwidth, 0, "xwidth")
+  safety.ensureIntegerOver(yheight, 0, "yheight")
+  safety.ensureUserdata(image, "image")
+  if (mode == nil) then mode = "normal" end
+  safety.ensureString(mode, "mode")
+  assert(mode == "normal" or mode == "scale" or mode == "fill",
+         "You must include a valid mode: normal, scale, fill, none")
+  if (quad ~= nil) then safety.ensureUserdata(quad, "quad") end
+  if (sx ~= nil) then safety.ensureNumber(sx, "sx") end
+  if (sy ~= nil) then safety.ensureNumber(sy, "sy") end
+  local width, height
+  if (quad) then
+    local _, _, w, h = quad:getViewport()
+    width, height = w, h
+  else
+    width, height = image:getDimensions()
+  end
+  local owidth = (self.tilewidth + self.xspacing) * xwidth - self.xspacing
+  local oheight = (self.tileheight + self.yspacing) * yheight - self.yspacing
+  if (mode == "scale") then
+    local rX = owidth / width
+    local rY = oheight / height
+    if (rX > rY) then
+      sx = rY
+      sy = rY
+    else
+      sx = rX
+      sy = rX
+    end
+  elseif (mode == "fill") then
+    sx = owidth / width
+    sy = oheight / height
+  end
+  local ox, oy = self:ClearRoom(xwidth, yheight)
+  local t = ImageButton(((self.tilewidth + self.xspacing) * (ox - 1)),
+                        ((self.tileheight + self.yspacing) * (oy - 1)), image,
+                        quad, sx, sy)
+  for x = ox, ox + xwidth - 1 do
+    for y = oy, oy + yheight - 1 do self.grid:set(x, y, t) end
+  end
+  self.container:add(t)
+  return t
+end
+--- Creates a batched image in the grid
+---@param xwidth integer
+---@param yheight integer
+---@param batcher Batcher
+---@param mode "normal"|"scale"|"fill"|nil
+---@param quad love.Quad|nil
+---@param sx number|nil
+---@param sy number|nil
+---@return BatchedImage
+function Grider:BatchedImage(xwidth, yheight, batcher, mode, quad, sx, sy)
+  safety.ensureIntegerOver(xwidth, 0, "xwidth")
+  safety.ensureIntegerOver(yheight, 0, "yheight")
+  safety.ensureBatcher(batcher, "batcher")
+  if (mode == nil) then mode = "normal" end
+  safety.ensureString(mode, "mode")
+  assert(mode == "normal" or mode == "scale" or mode == "fill",
+         "You must include a valid mode: normal, scale, fill, none")
+  if (quad ~= nil) then safety.ensureUserdata(quad, "quad") end
+  if (sx ~= nil) then safety.ensureNumber(sx, "sx") end
+  if (sy ~= nil) then safety.ensureNumber(sy, "sy") end
+  local width, height
+  if (quad) then
+    local _, _, w, h = quad:getViewport()
+    width, height = w, h
+  else
+    width, height = batcher.batch:getTexture():getDimensions()
+  end
+  local owidth = (self.tilewidth + self.xspacing) * xwidth - self.xspacing
+  local oheight = (self.tileheight + self.yspacing) * yheight - self.yspacing
+  if (mode == "scale") then
+    local rX = owidth / width
+    local rY = oheight / height
+    if (rX > rY) then
+      sx = rY
+      sy = rY
+    else
+      sx = rX
+      sy = rX
+    end
+  elseif (mode == "fill") then
+    sx = owidth / width
+    sy = oheight / height
+  end
+  local ox, oy = self:ClearRoom(xwidth, yheight)
+  local t = BatchedImage(((self.tilewidth + self.xspacing) * (ox - 1)),
+                         ((self.tileheight + self.yspacing) * (oy - 1)),
+                         batcher, quad, sx, sy)
+  for x = ox, ox + xwidth - 1 do
+    for y = oy, oy + yheight - 1 do self.grid:set(x, y, t) end
+  end
+  self.container:add(t)
+  return t
+end
+--- Creates a batched image button in the grid
+---@param xwidth integer
+---@param yheight integer
+---@param batcher Batcher
+---@param mode "normal"|"scale"|"fill"|nil
+---@param quad love.Quad|nil
+---@param sx number|nil
+---@param sy number|nil
+---@return BatchedImageButton
+function Grider:BatchedImageButton(xwidth, yheight, batcher, mode, quad, sx, sy)
+  safety.ensureIntegerOver(xwidth, 0, "xwidth")
+  safety.ensureIntegerOver(yheight, 0, "yheight")
+  safety.ensureBatcher(batcher, "batcher")
+  if (mode == nil) then mode = "normal" end
+  safety.ensureString(mode, "mode")
+  assert(mode == "normal" or mode == "scale" or mode == "fill",
+         "You must include a valid mode: normal, scale, fill, none")
+  if (quad ~= nil) then safety.ensureUserdata(quad, "quad") end
+  if (sx ~= nil) then safety.ensureNumber(sx, "sx") end
+  if (sy ~= nil) then safety.ensureNumber(sy, "sy") end
+  local width, height
+  if (quad) then
+    local _, _, w, h = quad:getViewport()
+    width, height = w, h
+  else
+    width, height = batcher.batch:getTexture():getDimensions()
+  end
+  local owidth = (self.tilewidth + self.xspacing) * xwidth - self.xspacing
+  local oheight = (self.tileheight + self.yspacing) * yheight - self.yspacing
+  if (mode == "scale") then
+    local rX = owidth / width
+    local rY = oheight / height
+    if (rX > rY) then
+      sx = rY
+      sy = rY
+    else
+      sx = rX
+      sy = rX
+    end
+  elseif (mode == "fill") then
+    sx = owidth / width
+    sy = oheight / height
+  end
+  local ox, oy = self:ClearRoom(xwidth, yheight)
+  local t = BatchedImageButton(((self.tilewidth + self.xspacing) * (ox - 1)),
+                               ((self.tileheight + self.yspacing) * (oy - 1)),
+                               batcher, quad, sx, sy)
+  for x = ox, ox + xwidth - 1 do
+    for y = oy, oy + yheight - 1 do self.grid:set(x, y, t) end
+  end
+  self.container:add(t)
+  return t
+end
+--- Creates a Batcher for use in the grid. Does not take up grid space
+---@param image love.Image
+---@return Batcher
+function Grider:Batcher(image)
+  safety.ensureUserdata(image, "image")
+  local t = Batcher(image)
   self.container:add(t)
   return t
 end

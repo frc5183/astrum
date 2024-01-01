@@ -18,6 +18,7 @@ local VisualButton = require "lib.gui.element.VisualButton"
 ---@module 'lib.gui.element.TextRectangle'
 local TextRectangle = require "lib.gui.element.TextRectangle"
 -- Assembler
+---@deprecated
 ---@param minimum integer the amount on the top of the List that will be left blank
 ---@param x number
 ---@param y number

@@ -24,5 +24,15 @@ return {
   ---@module 'lib.gui.element.Checkbox'
   Checkbox = require "lib.gui.element.Checkbox",
   ---@module 'lib.gui.element.Grider'
-  Grider = require "lib.gui.element.Grider"
+  Grider = require "lib.gui.element.Grider",
+  ---@module 'lib.gui.element.Batcher'
+  Batcher = require "lib.gui.element.Batcher",
+  ---@module 'lib.gui.element.BatchedImage'
+  BatchedImage = require "lib.gui.element.BatchedImage",
+  ---@module 'lib.gui.element.BatchedImageButton'
+  BatchedImageButton = require "lib.gui.element.BatchedImageButton",
+  ---@module 'lib.gui.element.ImageButton'
+  ImageButton = require "lib.gui.element.ImageButton",
+  ---@module 'lib.gui.element.AdapterImage'
+  AdapterImage = require "lib.gui.element.AdapterImage"
 }

@@ -24,8 +24,8 @@ function button:initButton(x, y, width, height)
 
   self._count_click = 0
   self._count_press = 0
-  self._callbacks_click = {}
-  self._callbacks_press = {}
+  self._callbacks_click = self._callbacks_click or {}
+  self._callbacks_press = self._callbacks_press or {}
   self.x = x
   self.y = y
   self.width = width
